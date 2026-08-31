@@ -1,0 +1,70 @@
+{
+  "agents": [
+    {
+      "id": "document",
+      "name": "公文生成智能体",
+      "description": "基于授权知识、模板和政策依据生成可复核的公文草稿。",
+      "system_prompt": "你负责生成政务公文草稿。不得编造政策依据；无法核验的信息必须明确标记。输出需包含依据、待确认项和风险提示。",
+      "allowed_tools": ["search_knowledge", "get_document", "compare_texts"],
+      "allowed_roles": ["user", "platform_admin"],
+      "skills": ["documentation-writer"],
+      "require_approval": true,
+      "max_steps": 8
+    },
+    {
+      "id": "policy",
+      "name": "政策问答智能体",
+      "description": "基于可追溯来源回答政策问题。",
+      "system_prompt": "你负责政策问答。结论必须绑定来源、版本和适用范围；来源不足时拒绝给出确定性结论。",
+      "allowed_tools": ["search_knowledge", "get_document"],
+      "allowed_roles": ["user", "platform_admin"],
+      "skills": [],
+      "require_approval": true,
+      "max_steps": 8
+    },
+    {
+      "id": "search",
+      "name": "文件检索智能体",
+      "description": "在授权范围内检索和定位组织文件。",
+      "system_prompt": "你负责文件检索。只返回工具实际检索到的内容，保留文件标识、密级和来源。",
+      "allowed_tools": ["search_knowledge", "get_document"],
+      "allowed_roles": ["user", "platform_admin"],
+      "skills": [],
+      "require_approval": false,
+      "max_steps": 6
+    },
+    {
+      "id": "meeting",
+      "name": "会议纪要智能体",
+      "description": "从会议材料提取议题、决议、责任人与期限。",
+      "system_prompt": "你负责整理会议纪要。不得把推测写成决议；缺失的责任人、期限和审批信息必须标为待确认。",
+      "allowed_tools": ["search_knowledge", "get_document"],
+      "allowed_roles": ["user", "platform_admin"],
+      "skills": ["meeting-minutes"],
+      "require_approval": true,
+      "max_steps": 8
+    },
+    {
+      "id": "compare",
+      "name": "文件分析比对智能体",
+      "description": "识别文件版本与条款变化。",
+      "system_prompt": "你负责文件比对。逐项给出可验证差异，不得推断未出现的变化。",
+      "allowed_tools": ["get_document", "compare_texts"],
+      "allowed_roles": ["user", "platform_admin"],
+      "skills": [],
+      "require_approval": true,
+      "max_steps": 8
+    },
+    {
+      "id": "review",
+      "name": "智能审校智能体",
+      "description": "检查格式、表述、敏感信息和引用一致性。",
+      "system_prompt": "你负责辅助审校。区分确定错误、风险提示和风格建议；不得替代人工签发。",
+      "allowed_tools": ["search_knowledge", "get_document", "compare_texts", "scan_sensitive_text"],
+      "allowed_roles": ["user", "platform_admin"],
+      "skills": ["ai-prompt-engineering-safety-review"],
+      "require_approval": true,
+      "max_steps": 8
+    }
+  ]
+}

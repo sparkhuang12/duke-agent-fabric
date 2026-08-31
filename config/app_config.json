@@ -1,0 +1,30 @@
+{
+  "app": {
+    "name": "生成式 AI 办公智能体平台",
+    "environment": "development",
+    "debug": true
+  },
+  "server": {
+    "host": "127.0.0.1",
+    "port": 9090
+  },
+  "model": {
+    "enabled": false,
+    "provider": "openai-compatible",
+    "base_url": "",
+    "api_key": "",
+    "chat_model": "",
+    "embedding_model": "",
+    "temperature": 0.2,
+    "timeout_seconds": 30
+  },
+  "storage": {
+    "data_dir": "data",
+    "upload_dir": "data/uploads"
+  },
+  "security": {
+    "data_boundary": "本地安全域",
+    "audit_enabled": true,
+    "manual_approval_required": true
+  }
+}

@@ -1,0 +1,7 @@
+name: duke_agent
+dependencies:
+  - python=3.12
+  - pip
+  - pillow
+  - pip:
+      - -e .[dev,production]

@@ -1,0 +1,2 @@
+-e .[dev,production]
+Pillow>=11.0.0

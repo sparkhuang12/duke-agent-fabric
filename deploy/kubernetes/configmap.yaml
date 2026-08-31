@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: duke-agent-fabric-config
+data:
+  DUKE_ENVIRONMENT: production
+  DUKE_HOST: 0.0.0.0
+  DUKE_PORT: "9090"
+  DUKE_AUTH_MODE: oidc
+  DUKE_OIDC_ISSUER: https://sso.internal.example/realms/duke
+  DUKE_OIDC_AUDIENCE: duke-agent-fabric
+  DUKE_OIDC_JWKS_URL: http://keycloak.duke-system.svc:8080/realms/duke/protocol/openid-connect/certs
+  DUKE_OIDC_ALLOWED_HOSTS: keycloak.duke-system.svc
+  DUKE_OPA_URL: http://opa.duke-system.svc:8181
+  DUKE_OPA_ALLOWED_HOSTS: opa.duke-system.svc
+  DUKE_OPA_FAILURE_MODE: closed
+  DUKE_OPA_EMBEDDED_DEVELOPMENT_FALLBACK: "false"
+  DUKE_MODEL_API_BASE: http://llm-gateway.duke-system.svc:4000/v1
+  DUKE_MODEL_NAME: approved-on-prem-model
+  DUKE_MODEL_FALLBACKS: approved-on-prem-fallback
+  DUKE_MODEL_ALLOWED_HOSTS: llm-gateway.duke-system.svc
+  DUKE_SHORT_TERM_RETENTION_DAYS: "7"
+  DUKE_LONG_TERM_RETENTION_DAYS: "365"
+  DUKE_STORAGE_ALLOWED_HOSTS: mysql.duke-system.svc,redis.duke-system.svc
+  DUKE_EXPOSE_LEGACY_API: "false"
+  LANGCHAIN_TRACING_V2: "false"
+  LANGSMITH_TRACING: "false"

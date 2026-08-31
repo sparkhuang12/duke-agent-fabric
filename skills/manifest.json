@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "policy": {
+    "text_only": true,
+    "allow_scripts": false,
+    "require_checksum": true,
+    "reviewed_at": "2026-08-31"
+  },
+  "skills": [
+    {
+      "name": "meeting-minutes",
+      "path": "vendor/github-awesome-copilot/meeting-minutes/SKILL.md",
+      "source_url": "https://github.com/github/awesome-copilot/tree/c0cbe7fa4454701aef526774203fd73e279e6aab/skills/meeting-minutes",
+      "source_commit": "c0cbe7fa4454701aef526774203fd73e279e6aab",
+      "sha256": "b42062573a93e60b458b9eff2d813b087767c2cd2d2c6d774fc40e26f5e55dee",
+      "license": "MIT",
+      "modified": true
+    },
+    {
+      "name": "documentation-writer",
+      "path": "vendor/github-awesome-copilot/documentation-writer/SKILL.md",
+      "source_url": "https://github.com/github/awesome-copilot/tree/c0cbe7fa4454701aef526774203fd73e279e6aab/skills/documentation-writer",
+      "source_commit": "c0cbe7fa4454701aef526774203fd73e279e6aab",
+      "sha256": "d644af13010e997529b2d45f0e122b62decfc0ce2ce031f0512c600fa981b948",
+      "license": "MIT",
+      "modified": true
+    },
+    {
+      "name": "ai-prompt-engineering-safety-review",
+      "path": "vendor/github-awesome-copilot/ai-prompt-engineering-safety-review/SKILL.md",
+      "source_url": "https://github.com/github/awesome-copilot/tree/c0cbe7fa4454701aef526774203fd73e279e6aab/skills/ai-prompt-engineering-safety-review",
+      "source_commit": "c0cbe7fa4454701aef526774203fd73e279e6aab",
+      "sha256": "a025ae38edb82f4343048d5a7d586b3f731ca1826eb78b541a5db1450cb042d2",
+      "license": "MIT",
+      "modified": true
+    }
+  ]
+}
+

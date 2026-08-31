@@ -1,0 +1,52 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: duke-agent-fabric-default-deny
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: duke-agent-fabric
+  policyTypes: [Ingress, Egress]
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: duke-agent-fabric-allow-required-only
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: duke-agent-fabric
+  policyTypes: [Ingress, Egress]
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              duke-network-role: ingress
+      ports:
+        - protocol: TCP
+          port: 9090
+  egress:
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+      ports:
+        - protocol: UDP
+          port: 53
+        - protocol: TCP
+          port: 53
+    - to:
+        - podSelector:
+            matchLabels:
+              duke-network-role: control-plane
+      ports:
+        - protocol: TCP
+          port: 3306
+        - protocol: TCP
+          port: 6379
+        - protocol: TCP
+          port: 8181
+        - protocol: TCP
+          port: 8080
+        - protocol: TCP
+          port: 4000

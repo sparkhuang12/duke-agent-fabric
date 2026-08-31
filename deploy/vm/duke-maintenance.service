@@ -1,0 +1,14 @@
+[Unit]
+Description=Duke Agent Fabric retention maintenance
+
+[Service]
+Type=oneshot
+User=duke
+Group=duke
+WorkingDirectory=/opt/duke-agent-fabric
+EnvironmentFile=/etc/duke-agent-fabric/duke.env
+ExecStart=/opt/duke-agent-fabric/.venv/bin/duke-maintenance prune-context --apply
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true

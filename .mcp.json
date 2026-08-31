@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "duke-office-tools": {
+      "command": "python3",
+      "args": ["-m", "duke_harness.mcp.office_server"],
+      "env": {
+        "DUKE_MCP_TENANT_ID": "${DUKE_MCP_TENANT_ID}",
+        "DUKE_MCP_USER_ID": "${DUKE_MCP_USER_ID}",
+        "DUKE_MCP_CLEARANCE": "${DUKE_MCP_CLEARANCE}"
+      }
+    }
+  }
+}
+
