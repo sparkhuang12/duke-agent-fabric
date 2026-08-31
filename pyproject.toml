@@ -37,7 +37,7 @@ postgres = [
 production = [
   "langgraph-checkpoint-redis>=0.5.2,<0.6",
   "PyMySQL>=1.1,<2",
-  "redis>=7.4,<8",
+  "redis>=7.4,<9",
   "SQLAlchemy>=2.0,<3",
 ]
 dev = [
