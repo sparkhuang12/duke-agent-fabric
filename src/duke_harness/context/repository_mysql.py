@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+from collections.abc import Iterable
 from datetime import datetime, timezone
 from typing import Any
 
@@ -48,7 +49,7 @@ class MySQLLongTermRepository:
 
         required_tables = {"context_threads", "context_memories", "harness_runs", "audit_events"}
         with self._engine.connect() as connection:
-            existing_tables = set(
+            existing_tables: set[str] = set(
                 connection.execute(
                     text(
                         """SELECT table_name FROM information_schema.tables
@@ -247,7 +248,7 @@ class MySQLLongTermRepository:
                 },
             )
             if idempotency_key:
-                payload = connection.execute(
+                payload: object = connection.execute(
                     text(
                         """SELECT record_json FROM harness_runs
                            WHERE namespace = :namespace AND idempotency_key = :idempotency_key"""
@@ -374,7 +375,7 @@ class MySQLLongTermRepository:
             "audit_events": "SELECT COUNT(*) FROM audit_events WHERE created_at < :cutoff",
         }
         with self._engine.begin() as connection:
-            payload_rows = connection.execute(
+            payload_rows: Iterable[object] = connection.execute(
                 text("SELECT record_json FROM harness_runs WHERE created_at < :cutoff FOR UPDATE"),
                 {"cutoff": short_cutoff_value},
             ).scalars()

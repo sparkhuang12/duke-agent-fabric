@@ -18,6 +18,7 @@
 - Concurrent approval resume is serialized across replicas with an expiring Redis per-run lease.
 - Production identity uses self-hosted Keycloak-compatible OIDC with locally validated JWTs and mapped tenant/department/role/clearance claims.
 - Model traffic is restricted to explicitly allow-listed self-hosted OpenAI-compatible gateways; public SaaS and external tracing are forbidden by default.
+- Type-check all optional storage drivers in CI, using the same Python target as the interpreter that installed their dependencies.
 - The supported deployment profiles are protected single host, private-cloud VM and Kubernetes.
 
 ## Writing workbench
