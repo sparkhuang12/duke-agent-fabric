@@ -118,6 +118,30 @@ def create_app(settings: Settings | None = None, runtime_factory: RuntimeFactory
             response.status_code = status.HTTP_503_SERVICE_UNAVAILABLE
         return HealthStatus(status="ok" if ready else "degraded", checks=checks)
 
+    @app.get("/api/v1/workbench", tags=["operations"])
+    async def workbench_config() -> dict[str, Any]:
+        return {"auth_mode": configured.auth_mode, "legacy_enabled": configured.expose_legacy_api}
+
+    @app.get("/api/v1/workbench/session", tags=["operations"])
+    async def workbench_session(
+        request: Request,
+        principal: Principal = Depends(principal_from_headers),
+    ) -> dict[str, Any]:
+        runtime: Runtime = request.app.state.runtime
+        return {
+            "tenant_id": principal.tenant_id,
+            "user_id": principal.user_id,
+            "can_review": bool({"approver", "security_approver"}.intersection(principal.roles)),
+            "model_configured": runtime.models.ready,
+            "agents": [
+                agent.model_dump(
+                    include={"id", "name", "role_title", "description", "deliverable", "boundary", "require_approval"}
+                )
+                for agent in runtime.agents.list()
+                if set(agent.allowed_roles).intersection(principal.roles)
+            ],
+        }
+
     @app.get("/api/v1/agents", tags=["agents"])
     async def list_agents(
         request: Request,

@@ -72,13 +72,16 @@ class HarnessRunner:
             previous = self.repository.get_idempotent_run(address, request.idempotency_key)
             if previous is not None:
                 return previous
+        metadata = dict(request.metadata)
+        if request.writing_brief is not None:
+            metadata["writing_brief"] = request.writing_brief.model_dump()
         record = RunRecord(
             run_id=new_id("run"),
             address=address,
             status=RunStatus.running,
-            input=request.input,
+            input=request.model_input,
             trace_id=new_id("trace"),
-            metadata=request.metadata,
+            metadata=metadata,
             security_level=request.security_level,
             memory_scope=request.memory_scope,
         )
@@ -91,7 +94,7 @@ class HarnessRunner:
                 {
                     "run_id": record.run_id,
                     "deadline_epoch": time.time() + self.max_run_seconds,
-                    "input": request.input,
+                    "input": record.input,
                     "principal": principal.model_dump(mode="json"),
                     "address": address.model_dump(mode="json"),
                     "agent": agent.model_dump(mode="json"),
@@ -123,6 +126,17 @@ class HarnessRunner:
         record = self.repository.get_run(run_id)
         if record is None:
             raise RunNotFoundError(run_id)
+        agent = self.agents.require(record.address.agent_id)
+        decision = self.policies.decide(
+            action="run.approve",
+            principal=principal,
+            address=record.address,
+            agent=agent,
+            resource={"security_level": record.security_level.value},
+            context={"run_id": record.run_id},
+        )
+        if not decision.allow:
+            raise ContextAccessDeniedError("principal is not authorized to approve this run")
         if record.status != RunStatus.waiting_approval:
             return record
         if utc_now() > record.updated_at + timedelta(seconds=self.approval_ttl_seconds):
@@ -135,17 +149,6 @@ class HarnessRunner:
             self.repository.save_run(record)
             self._audit(record, "run.approval_expired")
             return record
-        agent = self.agents.require(record.address.agent_id)
-        decision = self.policies.decide(
-            action="run.approve",
-            principal=principal,
-            address=record.address,
-            agent=agent,
-            resource={"security_level": record.security_level.value},
-            context={"run_id": record.run_id},
-        )
-        if not decision.allow:
-            raise ContextAccessDeniedError("principal is not authorized to approve this run")
         record.metadata["approval"] = {
             "reviewer_id": principal.user_id,
             "roles": principal.roles,

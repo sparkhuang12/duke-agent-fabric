@@ -39,6 +39,23 @@ Content-Type: application/json
 }
 ```
 
+For the `document` agent, a request can also carry an optional `writing_brief`. The client resends the current brief on each revision and reuses the same `thread_id`. Changing the thread starts a different manuscript.
+
+```json
+{
+  "agent_id": "document",
+  "thread_id": "training-notice",
+  "input": "只调整报送日期，保留上轮已核实的责任单位。",
+  "writing_brief": {
+    "document_type": "通知",
+    "audience": "各直属单位",
+    "materials": "培训需求清单由办公室汇总，报送日期改为十二月十二日。"
+  }
+}
+```
+
+The assembled brief and instruction enter the same input-policy, classification, model and retention path as plain input. The submitted brief is available in `RunRecord.metadata.writing_brief` until the run payload expires. Only completed turns enter conversation history. Rejected and pending drafts can be inspected by authorized callers using their run IDs.
+
 The response is a `RunRecord`. Typical statuses are:
 
 - `completed`: output is authorized and persisted;
@@ -76,6 +93,12 @@ GET /api/v1/contexts/{agent_id}/{thread_id}?q=search+terms
 ```
 
 Context inspection is OPA-authorized and cannot select a different tenant or user through path parameters. The response contains the bounded summary, recent messages, matching private memories and truncation metadata.
+
+## Browser workbench
+
+`GET /api/v1/workbench` is a public bootstrap endpoint that returns `auth_mode` and `legacy_enabled`. Authenticated `GET /api/v1/workbench/session` returns the caller’s tenant and user identifiers, reviewer capability, model configuration status and the role descriptions available to that identity. Approval and run reads still require independent authorization.
+
+The workbench stores thread and run identifiers in tab-scoped session storage. On refresh it obtains manuscript text through authenticated run reads. OIDC tokens are kept in page memory. The public bootstrap and the writing desk remain available when legacy routes are disabled.
 
 ## Operations and catalogs
 

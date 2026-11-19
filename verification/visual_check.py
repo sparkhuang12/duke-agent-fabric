@@ -68,6 +68,10 @@ def wait_for_server(base_url: str, process: subprocess.Popen[str]) -> None:
 
 def assert_dom_contains(base_url: str) -> None:
     dom = run_chrome(["--dump-dom", base_url]).stdout
+    missing = [term for term in ("办公写作台", "角色手册", "稿件记录", "政策研判", "模型待配置") if term not in dom]
+    if missing:
+        raise AssertionError(f"Writing desk missing terms: {missing}")
+    dom = run_chrome(["--dump-dom", base_url + "/operations.html"]).stdout
     required_terms = [
         "生成式 AI 办公智能体工作台",
         "公文生成智能体",
@@ -82,7 +86,6 @@ def assert_dom_contains(base_url: str) -> None:
         "文件入库",
         "系统配置",
         "合计 800 万元",
-        "私有化部署",
     ]
     missing = [term for term in required_terms if term not in dom]
     if missing:
