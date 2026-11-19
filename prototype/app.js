@@ -630,45 +630,6 @@ function openTaskModal() {
   });
 }
 
-function openAgentRunModal() {
-  const agent = state.selectedAgent;
-  if (!agent) {
-    return;
-  }
-  openModal({
-    eyebrow: "智能体试运行",
-    title: agent.name,
-    body: `
-      <form id="agentRunForm" class="modal-form">
-        <label>输入任务<textarea name="prompt" rows="6" required placeholder="描述你要处理的办公任务，后端会调用 /api/agents/${agent.id}/run"></textarea></label>
-        <button class="primary-button full" type="submit">运行接口</button>
-      </form>
-      <pre id="agentRunResult" class="result-box"></pre>
-    `
-  });
-
-  byId("agentRunForm").addEventListener("submit", async (event) => {
-    event.preventDefault();
-    const formElement = event.currentTarget;
-    const form = new FormData(formElement);
-    const resultBox = byId("agentRunResult");
-    resultBox.textContent = "正在调用接口...";
-    try {
-      setFormBusy(formElement, true, "正在运行");
-      const payload = { prompt: form.get("prompt") };
-      const result = await request(`/api/agents/${agent.id}/run`, {
-        method: "POST",
-        body: JSON.stringify(payload)
-      });
-      resultBox.textContent = JSON.stringify(result, null, 2);
-    } catch (error) {
-      resultBox.textContent = error instanceof Error ? error.message : String(error);
-    } finally {
-      setFormBusy(formElement, false);
-    }
-  });
-}
-
 function openAgentDetailModal() {
   const agent = state.selectedAgent;
   if (!agent) {
@@ -843,7 +804,9 @@ function setupEvents() {
   byId("openTaskModal").addEventListener("click", openTaskModal);
   byId("openConfigModal").addEventListener("click", openConfigModal);
   byId("openDocumentModal").addEventListener("click", openDocumentModal);
-  byId("openAgentRunModal").addEventListener("click", openAgentRunModal);
+  byId("openAgentWorkspace").addEventListener("click", () => {
+    if (state.selectedAgent) location.href = "./index.html?agent=" + encodeURIComponent(state.selectedAgent.id);
+  });
   byId("openAgentDetailModal").addEventListener("click", openAgentDetailModal);
   byId("knowledgeSearchForm").addEventListener("submit", runKnowledgeSearch);
   byId("refreshAudit").addEventListener("click", async () => {

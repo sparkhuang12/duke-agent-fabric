@@ -4,6 +4,9 @@ This project follows semantic versioning after `1.0.0`. Dates use UTC.
 
 ## [Unreleased]
 
+- Added a Chinese-language writing desk with editable manuscript briefs, isolated revision threads, role guidance and reviewer feedback.
+- Prioritized the latest approved draft and its instruction when assembling bounded context, with explicit excerpts for oversized manuscripts.
+
 - Renamed the public project and distribution from Duke Agent Harness to Duke Agent Fabric.
 - Added `duke-agent-fabric` as the primary CLI while retaining `duke-harness` as a compatibility alias.
 

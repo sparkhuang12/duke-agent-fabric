@@ -83,18 +83,28 @@ class ContextManager:
         self._compact_if_needed(address)
 
     def _compact_if_needed(self, address: ContextAddress) -> None:
-        count = self.repository.message_count(address)
-        if count <= self.recent_messages * 2:
+        # Summarize the window immediately preceding the verbatim history.
+        window = self.repository.recent_messages(address, self.recent_messages * 2)
+        older = window[: -self.recent_messages]
+        if not older:
             return
-        older = self.repository.recent_messages(address, self.recent_messages * 3)[: self.recent_messages]
-        if any(
-            SECURITY_RANKS.get(str(item.metadata.get("security_level", "internal")), 1) > SECURITY_RANKS["internal"]
+        lines = [
+            f"{item.role}: {self._excerpt(item.content, 500)}"
             for item in older
-        ):
-            return
-        lines = [f"{item.role}: {item.content[:500]}" for item in older]
-        summary = "\n".join(line for line in lines if line).strip()[-self.summary_chars :]
-        self.repository.set_summary(address, summary)
+            if SECURITY_RANKS.get(str(item.metadata.get("security_level", "internal")), 1) <= SECURITY_RANKS["internal"]
+        ]
+        self.repository.set_summary(address, "\n".join(lines)[-self.summary_chars :])
+
+    @staticmethod
+    def _excerpt(content: str, limit: int) -> str:
+        if len(content) <= limit:
+            return content
+        omission = "\n〔中段省略〕\n"
+        if limit <= len(omission):
+            return content[:limit]
+        available = limit - len(omission)
+        tail = available // 2
+        return content[: available - tail] + omission + (content[-tail:] if tail else "")
 
     def _fit_budget(
         self,
@@ -103,19 +113,27 @@ class ContextManager:
         memories: list[MemoryItem],
     ) -> tuple[str, list[StoredMessage], list[MemoryItem]]:
         remaining = self.max_chars
-        fitted_summary = summary[-min(len(summary), self.summary_chars, remaining) :]
-        remaining -= len(fitted_summary)
         fitted_messages: list[StoredMessage] = []
+        # Keep a continuous suffix. Share the budget between the newest draft
+        # and its instruction when either is too long to fit in full.
         for message in reversed(messages):
-            if len(message.content) > remaining:
-                continue
-            fitted_messages.append(message)
-            remaining -= len(message.content)
+            if not remaining:
+                break
+            limit = remaining
+            if not fitted_messages and message.role == "assistant" and len(messages) >= 2:
+                instruction = messages[-2]
+                if instruction.role == "user" and instruction.run_id == message.run_id:
+                    limit -= min(len(instruction.content), remaining // 3)
+            content = self._excerpt(message.content, limit)
+            fitted_messages.append(message.model_copy(update={"content": content}))
+            remaining -= len(content)
         fitted_messages.reverse()
+        summary_limit = min(remaining, self.summary_chars)
+        fitted_summary = summary[-summary_limit:] if summary_limit else ""
+        remaining -= len(fitted_summary)
         fitted_memories = []
         for memory in memories:
-            if len(memory.content) > remaining:
-                continue
-            fitted_memories.append(memory)
-            remaining -= len(memory.content)
+            if len(memory.content) <= remaining:
+                fitted_memories.append(memory)
+                remaining -= len(memory.content)
         return fitted_summary, fitted_messages, fitted_memories

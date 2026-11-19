@@ -150,3 +150,29 @@ def test_short_term_run_payload_is_scrubbed_after_seven_days(tmp_path: Path) -> 
     assert "user_supplied" not in scrubbed.metadata
     assert "payload_scrubbed_at" in scrubbed.metadata["retention"]
     assert repository.get_run(retained.run_id).input == "approved long-term input"  # type: ignore[union-attr]
+
+
+def test_long_approved_draft_keeps_instruction_opening_and_deadline(tmp_path: Path) -> None:
+    manager = ContextManager(SQLiteContextRepository(tmp_path / "drafts.db"), max_chars=110, recent_messages=4)
+    address = ContextAddress(tenant_id="t", user_id="u", agent_id="document", thread_id="draft")
+    manager.record_turn(address, "old", "旧要求", "旧内容" * 80)
+    manager.record_turn(address, "latest", "只修改报送日期", "各处室：" + "中间内容" * 100 + "截止十二月十日。")
+    snapshot = manager.load(address, "改稿")
+    assert snapshot.truncated and snapshot.char_count <= 110
+    assert [message.run_id for message in snapshot.recent_messages] == ["latest", "latest"]
+    prompt, draft = snapshot.recent_messages
+    assert prompt.content == "只修改报送日期"
+    assert draft.content.startswith("各处室：") and draft.content.endswith("截止十二月十日。")
+    assert "中段省略" in draft.content
+
+
+def test_summary_covers_turn_before_recent_window_without_restricted_content(tmp_path: Path) -> None:
+    manager = ContextManager(SQLiteContextRepository(tmp_path / "drafts.db"), recent_messages=4)
+    address = ContextAddress(tenant_id="t", user_id="u", agent_id="document", thread_id="draft")
+    levels = ["internal", "internal", "confidential", "internal", "internal"]
+    for index, level in enumerate(levels):
+        manager.record_turn(address, str(index), f"input-{index}", f"draft-{index}", security_level=level)
+    snapshot = manager.load(address, "", clearance="internal")
+    assert "draft-1" in snapshot.summary
+    assert "draft-2" not in snapshot.summary
+    assert [item.run_id for item in snapshot.recent_messages] == ["3", "3", "4", "4"]

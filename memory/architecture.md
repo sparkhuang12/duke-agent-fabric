@@ -20,10 +20,17 @@
 - Model traffic is restricted to explicitly allow-listed self-hosted OpenAI-compatible gateways; public SaaS and external tracing are forbidden by default.
 - The supported deployment profiles are protected single host, private-cloud VM and Kubernetes.
 
+## Writing workbench
+
+- `prototype/index.html` is the v1 writing desk. `prototype/operations.html` hosts the development dashboard. The homepage forwards legacy hash links; the optional legacy router is not a dependency of the writing desk.
+- `config/agents.json` owns role descriptions, deliverables and review boundaries used by the desk and model. Each manuscript/role has its own thread. A structured document brief is submitted anew each round and classified together with the instruction.
+- Approved turns form the revision history. The prompt budget prioritizes the latest draft and instruction before older excerpts. Historical excerpts and retrieved memories are model input data. Reviewers use the existing four-eyes approval endpoints.
+- The browser keeps only manuscript references and development identity in tab-scoped storage. It rehydrates submitted briefs and versions through authorized run reads. Unsubmitted form edits live in page memory.
+
 ## Production assumptions still requiring owner decisions
 
 - Expected concurrency, latency SLO and durable workload queue requirements.
 - Tenant deletion/export, backup location and legal-hold exceptions.
 - Actual on-premises model inventory and fallback order.
 - Evaluation datasets and release-blocking quality thresholds for each agent.
-- Human approval UI, approver resolution and escalation timers.
+- Organizational approver assignment, notifications and escalation timers.

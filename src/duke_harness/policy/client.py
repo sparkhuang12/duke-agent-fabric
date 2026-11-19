@@ -123,6 +123,7 @@ class PolicyClient:
             required = "security_approver" if security_level in {"confidential", "secret"} else "approver"
             allow = (
                 subject["tenant_id"] == address["tenant_id"]
+                and ranks.get(str(subject.get("clearance", "internal")), 1) >= ranks.get(security_level, 1)
                 and subject["user_id"] != address["user_id"]
                 and (required in roles or "security_approver" in roles)
             )
