@@ -1,0 +1,271 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-19T10:36:56+00:00",
+  "title": "Design System: Duke 写作工作室",
+  "extensions": {
+    "colorMeta": {
+      "canvas": {
+        "displayName": "桌面纸色",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(15% 0.0024 95.1)",
+          "oklch(27% 0.0040 95.1)",
+          "oklch(39% 0.0051 95.1)",
+          "oklch(51% 0.0054 95.1)",
+          "oklch(63% 0.0050 95.1)",
+          "oklch(75% 0.0038 95.1)",
+          "oklch(85% 0.0024 95.1)",
+          "oklch(95% 0.0008 95.1)"
+        ]
+      },
+      "surface": {
+        "displayName": "稿纸白",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(15% 0.0024 95.1)",
+          "oklch(27% 0.0040 95.1)",
+          "oklch(39% 0.0051 95.1)",
+          "oklch(51% 0.0054 95.1)",
+          "oklch(63% 0.0049 95.1)",
+          "oklch(75% 0.0038 95.1)",
+          "oklch(85% 0.0024 95.1)",
+          "oklch(95% 0.0008 95.1)"
+        ]
+      },
+      "ink": {
+        "displayName": "墨黑",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(15% 0.0043 294.9)",
+          "oklch(27% 0.0071 294.9)",
+          "oklch(39% 0.0089 294.9)",
+          "oklch(51% 0.0094 294.9)",
+          "oklch(63% 0.0087 294.9)",
+          "oklch(75% 0.0067 294.9)",
+          "oklch(85% 0.0043 294.9)",
+          "oklch(95% 0.0015 294.9)"
+        ]
+      },
+      "muted": {
+        "displayName": "说明灰",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(15% 0.0073 299.5)",
+          "oklch(27% 0.0121 299.5)",
+          "oklch(39% 0.0151 299.5)",
+          "oklch(51% 0.0161 299.5)",
+          "oklch(63% 0.0148 299.5)",
+          "oklch(75% 0.0114 299.5)",
+          "oklch(85% 0.0073 299.5)",
+          "oklch(95% 0.0025 299.5)"
+        ]
+      },
+      "rule": {
+        "displayName": "分隔线",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(15% 0.0046 87.5)",
+          "oklch(27% 0.0075 87.5)",
+          "oklch(39% 0.0094 87.5)",
+          "oklch(51% 0.0100 87.5)",
+          "oklch(63% 0.0092 87.5)",
+          "oklch(75% 0.0071 87.5)",
+          "oklch(85% 0.0046 87.5)",
+          "oklch(95% 0.0016 87.5)"
+        ]
+      },
+      "rule-dark": {
+        "displayName": "边框灰",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(15% 0.0042 308.3)",
+          "oklch(27% 0.0069 308.3)",
+          "oklch(39% 0.0086 308.3)",
+          "oklch(51% 0.0092 308.3)",
+          "oklch(63% 0.0084 308.3)",
+          "oklch(75% 0.0065 308.3)",
+          "oklch(85% 0.0042 308.3)",
+          "oklch(95% 0.0014 308.3)"
+        ]
+      },
+      "blue": {
+        "displayName": "钴蓝",
+        "role": "primary",
+        "tonalRamp": [
+          "oklch(15% 0.0932 272.2)",
+          "oklch(27% 0.1540 272.2)",
+          "oklch(39% 0.1931 272.2)",
+          "oklch(51% 0.2052 272.2)",
+          "oklch(63% 0.1884 272.2)",
+          "oklch(75% 0.1452 272.2)",
+          "oklch(85% 0.0932 272.2)",
+          "oklch(95% 0.0321 272.2)"
+        ]
+      },
+      "blue-deep": {
+        "displayName": "深钴蓝",
+        "role": "primary",
+        "tonalRamp": [
+          "oklch(15% 0.0775 271.9)",
+          "oklch(27% 0.1280 271.9)",
+          "oklch(39% 0.1605 271.9)",
+          "oklch(51% 0.1706 271.9)",
+          "oklch(63% 0.1566 271.9)",
+          "oklch(75% 0.1207 271.9)",
+          "oklch(85% 0.0775 271.9)",
+          "oklch(95% 0.0267 271.9)"
+        ]
+      },
+      "lilac": {
+        "displayName": "淡紫",
+        "role": "secondary",
+        "tonalRamp": [
+          "oklch(15% 0.0155 296.7)",
+          "oklch(27% 0.0257 296.7)",
+          "oklch(39% 0.0322 296.7)",
+          "oklch(51% 0.0342 296.7)",
+          "oklch(63% 0.0314 296.7)",
+          "oklch(75% 0.0242 296.7)",
+          "oklch(85% 0.0155 296.7)",
+          "oklch(95% 0.0054 296.7)"
+        ]
+      },
+      "butter": {
+        "displayName": "手册黄",
+        "role": "secondary",
+        "tonalRamp": [
+          "oklch(15% 0.0395 95.6)",
+          "oklch(27% 0.0652 95.6)",
+          "oklch(39% 0.0818 95.6)",
+          "oklch(51% 0.0869 95.6)",
+          "oklch(63% 0.0798 95.6)",
+          "oklch(75% 0.0615 95.6)",
+          "oklch(85% 0.0395 95.6)",
+          "oklch(95% 0.0136 95.6)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "headline": {
+        "displayName": "中文报头"
+      },
+      "wordmark": {
+        "displayName": "Duke 字标"
+      },
+      "body": {
+        "displayName": "操作界面"
+      },
+      "manuscript": {
+        "displayName": "稿件正文"
+      }
+    },
+    "shadows": [],
+    "motion": [
+      {
+        "name": "ink-in",
+        "value": ".26s ease-out",
+        "purpose": "产品介绍的下部内容渐显，遵循系统减少动态效果偏好。"
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "phone-roles",
+        "value": "520px"
+      },
+      {
+        "name": "product-cover",
+        "value": "620px"
+      },
+      {
+        "name": "single-desk",
+        "value": "720px"
+      },
+      {
+        "name": "compact-desk",
+        "value": "900px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "提交操作",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "用于生成或提交稿件。",
+      "html": "<button class=\"ds-primary\" type=\"button\">生成草稿</button>",
+      "css": ".ds-primary{border-radius:7px;min-height:43px;padding:.59rem 1.14rem;font:650 .9rem/1.45 var(--ui-font,sans-serif);cursor:pointer;background:var(--blue,#343bc2);color:white;border:0}.ds-primary:hover{background:var(--blue-deep,#252b96)}.ds-primary:focus-visible{outline:3px solid var(--blue,#343bc2);outline-offset:3px}"
+    },
+    {
+      "name": "次要操作",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "用于重新连接或检查状态。",
+      "html": "<button class=\"ds-secondary\" type=\"button\">重新连接</button>",
+      "css": ".ds-secondary{border-radius:7px;min-height:43px;padding:.59rem 1.14rem;font:650 .9rem/1.45 var(--ui-font,sans-serif);cursor:pointer;color:var(--ink,#222126);background:var(--surface,#fffefa);border:1px solid var(--rule-dark,#aaa7ad)}.ds-secondary:hover{background:var(--lilac,#e7e1fa)}.ds-secondary:focus-visible{outline:3px solid var(--blue,#343bc2);outline-offset:3px}"
+    },
+    {
+      "name": "主送对象",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "保留可见的字段标签。",
+      "html": "<label class=\"ds-field\">主送对象<input placeholder=\"例如：各直属单位\"></label>",
+      "css": ".ds-field{display:grid;gap:.4rem;color:var(--ink,#222126);font:700 .87rem var(--ui-font,sans-serif)}.ds-field input{color:inherit;background:var(--surface,#fffefa);border:1px solid #bab7c0;border-radius:6px;padding:.65rem .78rem;font:400 .92rem/1.55 var(--ui-font,sans-serif);caret-color:var(--blue,#343bc2)}.ds-field input:focus-visible{outline:3px solid var(--blue,#343bc2);outline-offset:3px}"
+    },
+    {
+      "name": "站点导航",
+      "kind": "nav",
+      "refersTo": "site-nav",
+      "description": "当前入口带有下划线。",
+      "html": "<nav class=\"ds-nav\" aria-label=\"站点导航\"><a href=\"./index.html\" aria-current=\"page\">写作台</a><a href=\"./product.html\">产品介绍</a></nav>",
+      "css": ".ds-nav{display:flex;gap:1.65rem}.ds-nav a{color:var(--muted,#64616b);font:600 .92rem var(--ui-font,sans-serif);text-decoration:none;padding:.55rem 0}.ds-nav a[aria-current],.ds-nav a:hover{color:var(--blue,#343bc2)}.ds-nav a[aria-current]{text-decoration:underline 2px;text-underline-offset:.42rem}.ds-nav a:focus-visible{outline:3px solid var(--blue,#343bc2);outline-offset:3px}"
+    },
+    {
+      "name": "当前角色",
+      "kind": "chip",
+      "refersTo": "role-active",
+      "description": "按钮状态与工作区当前角色一致。",
+      "html": "<button type=\"button\" class=\"ds-role\" aria-pressed=\"true\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" aria-hidden=\"true\"><path d=\"M1 11L11 1L15.4 5L5.3 15.1L.6 16Z\" fill=\"currentColor\"/></svg>公文起草</button>",
+      "css": ".ds-role{display:inline-flex;align-items:center;gap:.56rem;padding:.45rem .98rem;min-height:42px;border:1px solid transparent;border-radius:30px;background:#292633;color:#fff;font:650 .89rem var(--ui-font,sans-serif);cursor:pointer}.ds-role:hover{background:#393447}.ds-role:focus-visible{outline:3px solid var(--blue,#343bc2);outline-offset:3px}"
+    },
+    {
+      "name": "稿纸",
+      "kind": "card",
+      "refersTo": "sheet",
+      "description": "角色标题与正文以分隔线划分。",
+      "html": "<section class=\"ds-sheet\"><h2>公文起草</h2><p>根据收文对象和已核实的材料起草公文。</p></section>",
+      "css": ".ds-sheet{background:var(--surface,#fffefa);color:var(--ink,#222126);border:1px solid var(--rule,#dcd9d2);border-radius:12px}.ds-sheet h2{margin:0;padding:1.35rem 1.25rem 1.1rem;border-bottom:1px solid var(--rule,#dcd9d2);font:850 1.65rem/1.3 var(--display-font,sans-serif)}.ds-sheet p{margin:0;padding:1.2rem 1.25rem;color:var(--muted,#64616b);font:.85rem/1.65 var(--ui-font,sans-serif)}"
+    },
+    {
+      "name": "角色手册",
+      "kind": "custom",
+      "refersTo": "handbook",
+      "description": "用书签和书脊标识角色参考区。",
+      "html": "<section class=\"ds-handbook\"><h2>角色手册<i aria-hidden=\"true\"></i></h2><dl><dt>交付内容</dt><dd>公文草稿、依据清单、待核事项</dd></dl></section>",
+      "css": ".ds-handbook{position:relative;overflow:hidden;padding:1.4rem 1.55rem 1.55rem;background:var(--butter,#f7e6a3);color:#302a20;border-radius:4px 15px 15px 4px}.ds-handbook:before{content:\"\";position:absolute;inset:0 auto 0 5px;width:4px;border-inline:1px solid #9d874f;opacity:.55}.ds-handbook h2{display:flex;justify-content:space-between;margin:0;padding-bottom:.8rem;border-bottom:1px solid #b9a878;font:800 1.16rem/1.4 var(--display-font,sans-serif)}.ds-handbook i{width:20px;height:24px;margin-top:-1.4rem;background:var(--blue,#343bc2);clip-path:polygon(0 0,100% 0,100% 100%,50% 72%,0 100%)}.ds-handbook dl,.ds-handbook dd{margin:0}.ds-handbook dt{margin:.9rem 0 .2rem;color:#66562c;font:700 .76rem var(--ui-font,sans-serif)}.ds-handbook dd{font:.88rem/1.75 var(--ui-font,sans-serif)}"
+    }
+  ],
+  "narrative": {
+    "northStar": "独立出版工作室",
+    "overview": "铅笔、圈画笔迹和校样拼贴把写作台与产品介绍连在一起。进入稿纸后，材料、正文和复核意见占据主要阅读空间。",
+    "keyCharacteristics": [
+      "淡紫封面、钴蓝油墨、奶油色稿纸。",
+      "在作者身边留一本可随工作角色切换的手册。",
+      "使用本地字体和图像，在内网也能看到完整的版面。"
+    ],
+    "rules": [
+      {
+        "name": "The Manuscript Rule",
+        "body": "正文保留原始段落与换行，桌面阅读行宽上限为 70ch。",
+        "section": "typography"
+      }
+    ],
+    "dos": [
+      "Do 用两段完整短语安排产品标题在手机上的换行。",
+      "Do 保留稿件状态文字以及按钮的可见焦点。"
+    ],
+    "donts": [
+      "Don't 把封面拼贴延伸到草稿与复核正文背后。",
+      "Don't 仅靠状态颜色区分当前角色或待复核稿件。"
+    ]
+  }
+}

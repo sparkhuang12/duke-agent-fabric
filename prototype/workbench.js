@@ -246,11 +246,15 @@ async function connect() {
     const desired = new URLSearchParams(location.search).get("agent") || "document";
     const role = session.agents.find(item => item.id === desired) || session.agents[0];
     el("editor").querySelector(".desk").hidden = !role;
-    if (role) await activate(role);
+    if (role) {
+      el("studioTitle").textContent = "写作工作室";
+      document.querySelector(".cover-copy p").textContent = "从一份材料开始，在这里起草、复核，逐轮成稿。";
+      await activate(role);
+    }
     else {
       state.agent = state.active = null;
-      el("roleTitle").textContent = "复核工作台";
-      el("roleDescription").textContent = "从「待我复核」查看分配给当前身份的稿件。";
+      el("studioTitle").textContent = "复核工作台";
+      document.querySelector(".cover-copy p").textContent = "从「待我复核」查看分配给当前身份的稿件。";
       el("newThread").disabled = true;
     }
     el("connectionLabel").textContent = session.model_configured ? "模型已配置" : "模型待配置";

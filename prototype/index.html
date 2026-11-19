@@ -3,39 +3,48 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#193e34">
+  <meta name="theme-color" content="#f9f8f4">
   <meta name="description" content="Duke 办公写作台，供经办人起草公文、核对材料、复核草稿和逐轮改稿。">
   <title>办公写作台 · Duke Agent Fabric</title>
+  <link rel="icon" href="./assets/studio-mark.png">
+  <link rel="stylesheet" href="./studio.css">
   <link rel="stylesheet" href="./workbench.css">
   <script src="./workbench.js" defer></script>
 </head>
 <body>
   <a class="skip" href="#editor">跳到稿件编辑区</a>
-  <header class="mast">
-    <a class="brand" href="./index.html" aria-label="Duke 办公写作台首页"><i class="brand-leaf" aria-hidden="true"></i><b>Duke</b><span>办公写作台</span></a>
-    <div class="mast-actions">
-      <button id="openReviews" hidden>待我复核</button>
-      <a id="operations" href="./operations.html" hidden>平台总览</a>
-      <button id="connection" class="connection"><i aria-hidden="true"></i><span id="connectionLabel">连接中</span></button>
+  <header class="studio-header">
+    <div class="studio-bar">
+      <a class="studio-brand" href="./index.html" aria-label="Duke 办公写作台首页"><i class="studio-mark" aria-hidden="true"></i><b>Duke</b></a>
+      <nav class="studio-nav" aria-label="站点导航">
+        <a href="./index.html" aria-current="page">写作台</a>
+        <a id="operations" href="./operations.html" hidden>平台总览</a>
+        <a href="./product.html">产品介绍</a>
+      </nav>
+      <div class="studio-tools">
+        <button id="openReviews" class="secondary" hidden>待我复核</button>
+        <button id="connection" class="connection"><i aria-hidden="true"></i><span id="connectionLabel">连接中</span></button>
+      </div>
     </div>
   </header>
   <div class="layout">
-    <nav id="roleNav" class="rail" aria-label="办公角色">
-      <h2>办公角色</h2>
-      <div id="roles" class="role-list"></div>
-      <a class="product-link" href="./product.html">产品介绍</a>
-    </nav>
     <main id="editor">
-      <div class="page-heading">
-        <div><h1 id="roleTitle">公文起草</h1><p id="roleDescription">根据收文对象和已核实的材料起草公文，按经办人的意见逐轮修订。</p></div>
-        <button type="button" id="newThread" class="secondary" disabled>新建稿件</button>
-      </div>
+      <section class="desk-cover" aria-labelledby="studioTitle">
+        <div class="cover-copy">
+          <h1 id="studioTitle">写作工作室</h1>
+          <p>从一份材料开始，在这里起草、复核，逐轮成稿。</p>
+          <button type="button" id="newThread" class="cover-action" disabled><i class="plus" aria-hidden="true"></i>新建稿件</button>
+        </div>
+      </section>
+      <nav id="roleNav" class="role-nav" aria-label="切换写作角色">
+        <div id="roles" class="role-list"></div>
+      </nav>
       <p id="pageNotice" class="notice" role="status" hidden></p>
       <div class="desk">
         <section class="sheet" aria-labelledby="formTitle">
           <div class="sheet-title">
-            <h2 id="formTitle">起草单</h2>
-            <span id="threadState" class="state-label">新稿</span>
+            <div><h2 id="roleTitle">公文起草</h2><p id="roleDescription">根据收文对象和已核实的材料起草公文，按经办人的意见逐轮修订。</p></div>
+            <div class="sheet-meta"><span id="formTitle">起草单</span><span id="threadState" class="state-label">新稿</span></div>
           </div>
           <form id="compose">
             <fieldset id="fields" disabled>
@@ -60,8 +69,8 @@
         </section>
         <aside class="margin">
           <section class="handbook">
-            <div class="handbook-title"><i class="book" aria-hidden="true"></i><h2>角色手册</h2></div>
-            <dl><dt>本角色交付</dt><dd id="deliverable">公文草稿、依据清单、待核事项</dd><dt>复核边界</dt><dd id="boundary">文号、日期、政策依据缺失时标记待核，签发由人工决定。</dd></dl>
+            <div class="handbook-title"><h2>角色手册</h2><i class="book-tabs" aria-hidden="true"></i></div>
+            <dl><dt>交付内容</dt><dd id="deliverable">公文草稿、依据清单、待核事项</dd><dt>复核边界</dt><dd id="boundary">文号、日期、政策依据缺失时标记待核，签发由人工决定。</dd></dl>
           </section>
           <section class="history">
             <h2>稿件记录</h2>
