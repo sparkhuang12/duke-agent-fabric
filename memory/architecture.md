@@ -28,7 +28,7 @@
 - Approved turns form the revision history. The prompt budget prioritizes the latest draft and instruction before older excerpts. Historical excerpts and retrieved memories are model input data. Reviewers use the existing four-eyes approval endpoints.
 - The browser keeps only manuscript references and development identity in tab-scoped storage. It rehydrates submitted briefs and versions through authorized run reads. Unsubmitted form edits live in page memory.
 
-The writing desk, operations views and product introduction share `prototype/studio.css`. The publishing-studio artwork and headline fonts are served from `prototype/assets/` for offline deployments. The role picker, edit form and review controls follow the v1 session capabilities. See `DESIGN.md` for the visual system.
+The writing desk, operations views and product introduction share `prototype/studio.css`. The youth-magazine photographic covers and Chinese display font are served from `prototype/assets/` for offline deployments. The role picker, edit form and review controls follow the v1 session capabilities. See `DESIGN.md` for the visual system.
 
 ## Production assumptions still requiring owner decisions
 

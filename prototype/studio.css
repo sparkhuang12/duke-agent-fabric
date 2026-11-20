@@ -5,27 +5,27 @@
   font-display: swap;
 }
 @font-face {
-  font-family: "Duke Press";
-  src: url("./assets/press-headlines.woff2") format("woff2");
+  font-family: "Duke Magazine";
+  src: url("./assets/magazine-headlines.woff2") format("woff2");
   font-weight: 900;
   font-display: swap;
 }
 :root {
   color-scheme: light;
-  --canvas: #f9f8f4;
+  --canvas: #fffaf2;
   --surface: #fffefa;
-  --ink: #222126;
-  --muted: #64616b;
-  --rule: #dcd9d2;
-  --rule-dark: #aaa7ad;
-  --blue: #343bc2;
-  --blue-deep: #252b96;
-  --lilac: #e7e1fa;
-  --butter: #f7e6a3;
-  --orange: #ef613f;
+  --ink: #1c191e;
+  --muted: #605a60;
+  --rule: #ded6ce;
+  --rule-dark: #a49b98;
+  --blue: #302bb9;
+  --blue-deep: #272392;
+  --sky: #c1e8ff;
+  --lime: #e8fa53;
+  --pink: #ffaaca;
   --ui-font: "Instrument Sans", "PingFang SC", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif;
   --display-font: "Bricolage Grotesque", "PingFang SC", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif;
-  --headline-font: "Duke Press", "Noto Serif CJK SC", "Songti SC", SimSun, serif;
+  --headline-font: "Duke Magazine", "Noto Sans CJK SC", "PingFang SC", "Microsoft YaHei", sans-serif;
   --reading-font: "Noto Serif CJK SC", "Songti SC", SimSun, serif;
   font: 16px/1.55 var(--ui-font);
   color: var(--ink);
@@ -41,14 +41,14 @@ button { border: 0; background: none; }
 button:disabled, input:disabled, select:disabled { cursor: default; }
 a { color: inherit; text-underline-offset: .22em; }
 :focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
-::selection { color: #201b39; background: #d6cbff; }
+::selection { color: #201b39; background: #ffbdd5; }
 .skip, .skip-link { position: fixed; z-index: 20; top: .5rem; left: .5rem; transform: translateY(-160%); padding: .55rem .85rem; color: white; background: var(--blue); }
 .skip:focus, .skip-link:focus { transform: none; }
-.studio-header { border-bottom: 1px solid var(--rule); background: var(--canvas); }
+.studio-header { border-bottom: 2px solid var(--ink); background: var(--canvas); }
 .studio-bar, .studio-wrap { width: min(1280px, calc(100% - 8vw)); margin-inline: auto; }
 .studio-bar { min-height: 70px; display: flex; align-items: center; gap: clamp(1.2rem, 4.1vw, 4.25rem); }
-.studio-brand { display: inline-flex; align-items: center; gap: .47rem; text-decoration: none; color: var(--ink); flex: none; }
-.studio-brand b { font: 800 2rem/1 var(--display-font); letter-spacing: -.04em; }
+.studio-brand { display: inline-flex; align-items: center; gap: .36rem; text-decoration: none; color: var(--ink); flex: none; }
+.studio-brand b { font: 800 2.25rem/1 var(--display-font); letter-spacing: -.04em; }
 .studio-mark { display: inline-block; flex: none; width: 31px; height: 31px; background: var(--blue); transform: rotate(-9deg); clip-path: polygon(40% 0,60% 0,60% 25%,79% 7%,93% 21%,75% 40%,100% 40%,100% 60%,75% 60%,93% 79%,79% 93%,60% 75%,60% 100%,40% 100%,40% 75%,21% 93%,7% 79%,25% 60%,0 60%,0 40%,25% 40%,7% 21%,21% 7%,40% 25%); }
 .studio-nav, .studio-tools { display: flex; align-items: center; gap: 1.65rem; }
 .studio-nav a { color: var(--muted); font-size: .92rem; font-weight: 600; text-decoration: none; padding-block: .55rem; white-space: nowrap; }
@@ -59,11 +59,11 @@ a { color: inherit; text-underline-offset: .22em; }
 .studio-tools > a:hover, .connection:hover { border-color: var(--rule-dark); }
 .connection i, .status-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #a96712; }
 .connection[data-ready="true"] i, .status-dot { background: #33724e; }
-.primary, .secondary, .cover-action { display: inline-flex; align-items: center; justify-content: center; gap: .6rem; min-height: 43px; padding: .59rem 1.14rem; border-radius: 7px; font: 650 .9rem/1.45 var(--ui-font); text-decoration: none; }
+.primary, .secondary, .cover-action { display: inline-flex; align-items: center; justify-content: center; gap: .6rem; min-height: 43px; padding: .59rem 1.14rem; border-radius: 4px; font: 700 .9rem/1.45 var(--ui-font); text-decoration: none; }
 .primary, .cover-action { background: var(--blue); color: white; }
 .primary:hover:not(:disabled), .cover-action:hover:not(:disabled) { background: var(--blue-deep); }
 .secondary { background: var(--surface); border: 1px solid var(--rule-dark); }
-.secondary:hover:not(:disabled) { background: var(--lilac); }
+.secondary:hover:not(:disabled) { background: var(--sky); }
 button:disabled { opacity: .56; }
 input, textarea, select { width: 100%; min-width: 0; padding: .65rem .78rem; border: 1px solid #bab7c0; border-radius: 6px; background: var(--surface); line-height: 1.55; font-size: .92rem; caret-color: var(--blue); }
 textarea { resize: vertical; }

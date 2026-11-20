@@ -107,7 +107,7 @@ def inspect_screenshot(path: Path, min_width: int, min_height: int) -> None:
                 pixel = rgb.getpixel((x, y))
                 sampled.append(pixel)
                 total += 1
-                if pixel not in {(249, 248, 244), (255, 255, 255), (255, 254, 250)}:
+                if pixel not in {(255, 250, 242), (255, 255, 255), (255, 254, 250)}:
                     non_background += 1
 
         unique_colors = len(set(sampled))

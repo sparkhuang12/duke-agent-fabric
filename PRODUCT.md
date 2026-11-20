@@ -4,7 +4,7 @@
 
 ## Platform
 
-Web. The writing desk, operations dashboard and product introduction are served from the same local application.
+web
 
 ## Users
 
@@ -20,4 +20,4 @@ Six roles cover drafting, policy questions, document search, minutes, comparison
 
 ## Brand Commitments
 
-Duke is the product name. The writing environment should feel young, artistic and welcoming to creative work. Long-form Chinese text, administrative facts, status and review feedback must remain easy to read.
+Duke is the product name. The user chose the visual language of a youth magazine: bright contrasting colours, photographic covers and lively editorial layouts. Long-form Chinese text, administrative facts, status and review feedback must remain easy to read.
