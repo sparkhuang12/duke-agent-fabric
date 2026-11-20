@@ -23,12 +23,12 @@
 
 ## Writing workbench
 
-- `prototype/index.html` is the v1 writing desk. `prototype/operations.html` hosts the development dashboard. The homepage forwards legacy hash links; the optional legacy router is not a dependency of the writing desk.
+- `prototype/index.html` opens the 山海手卷 novel desk. `prototype/office.html` is the six-role v1 office writing desk. `prototype/operations.html` hosts the development dashboard. The homepage forwards legacy hash links; the optional legacy router is not a dependency of the writing desk.
 - `config/agents.json` owns role descriptions, deliverables and review boundaries used by the desk and model. Each manuscript/role has its own thread. A structured document brief is submitted anew each round and classified together with the instruction.
 - Approved turns form the revision history. The prompt budget prioritizes the latest draft and instruction before older excerpts. Historical excerpts and retrieved memories are model input data. Reviewers use the existing four-eyes approval endpoints.
-- The browser keeps only manuscript references and development identity in tab-scoped storage. It rehydrates submitted briefs and versions through authorized run reads. Unsubmitted form edits live in page memory.
+- The office desk keeps only manuscript references and development identity in tab-scoped storage. It rehydrates submitted briefs and versions through authorized run reads. Unsubmitted form edits live in page memory.
 
-The writing desk, operations views and product introduction share `prototype/studio.css`. The youth-magazine photographic covers and Chinese display font are served from `prototype/assets/` for offline deployments. The role picker, edit form and review controls follow the v1 session capabilities. See `DESIGN.md` for the visual system.
+The novel library uses IndexedDB scoped by the authenticated tenant/user in the browser. Its development identity is persistent per browser profile. Concurrent book revisions create a separate copy. Text export is available on the shelf. The fiction agent receives an explicit bounded snapshot of earlier chapters, active text and chronologically relevant character/clue notes. Each generation uses its own isolated thread so discarded suggestions never become canon. The author explicitly accepts completed continuations. The office catalog remains six roles. The landscape, font subset and mark are served locally. See `DESIGN.md`.
 
 ## Production assumptions still requiring owner decisions
 

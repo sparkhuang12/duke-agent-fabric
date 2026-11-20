@@ -24,7 +24,7 @@ const state = {
 };
 
 const AGENT_ACCENTS = {
-  document: "#343bc2",
+  document: "#305c48",
   policy: "#825196",
   search: "#277c74",
   meeting: "#a05f19",
@@ -33,7 +33,7 @@ const AGENT_ACCENTS = {
 };
 
 const KNOWLEDGE_ACCENTS = {
-  documents: "#343bc2",
+  documents: "#305c48",
   policy: "#825196",
   meeting: "#a05f19",
   template: "#277c74",
@@ -42,7 +42,7 @@ const KNOWLEDGE_ACCENTS = {
 };
 
 const LAYER_ACCENTS = {
-  "应用层": "#343bc2",
+  "应用层": "#305c48",
   "智能协同层": "#277c74",
   "模型能力层": "#a05f19",
   "组织知识层": "#825196",
@@ -209,7 +209,7 @@ function renderAgents(filter = "") {
   grid.innerHTML = visible
     .map(
       (agent) => `
-        <button aria-pressed="${agent.id === state.selectedAgent?.id}" class="agent-card ${agent.id === state.selectedAgent?.id ? "active" : ""}" style="--agent-color: ${AGENT_ACCENTS[agent.id] || "#343bc2"}" data-id="${agent.id}" type="button">
+        <button aria-pressed="${agent.id === state.selectedAgent?.id}" class="agent-card ${agent.id === state.selectedAgent?.id ? "active" : ""}" style="--agent-color: ${AGENT_ACCENTS[agent.id] || "#305c48"}" data-id="${agent.id}" type="button">
           <span class="agent-icon">${escapeHtml(agent.icon)}</span>
           <h3>${escapeHtml(agent.name)}</h3>
           <p>${escapeHtml(agent.summary)}</p>
@@ -256,14 +256,14 @@ function renderKnowledge() {
     ? state.knowledge
         .map(
           (item) => `
-            <button class="knowledge-card" type="button" data-knowledge="${escapeHtml(item.id)}" style="--agent-color: ${KNOWLEDGE_ACCENTS[item.id] || "#343bc2"}">
+            <button class="knowledge-card" type="button" data-knowledge="${escapeHtml(item.id)}" style="--agent-color: ${KNOWLEDGE_ACCENTS[item.id] || "#305c48"}">
               <div class="card-title-row">
                 <strong>${escapeHtml(item.name)}</strong>
                 <span>${escapeHtml(item.count)}项</span>
               </div>
               <p>${escapeHtml(item.desc)}</p>
               <div class="knowledge-bar" aria-label="${escapeHtml(item.name)}就绪度 ${escapeHtml(item.value)}%">
-                <span style="width: ${item.value}%; --bar-color: ${KNOWLEDGE_ACCENTS[item.id] || "#343bc2"}"></span>
+                <span style="width: ${item.value}%; --bar-color: ${KNOWLEDGE_ACCENTS[item.id] || "#305c48"}"></span>
               </div>
             </button>
           `
@@ -440,7 +440,7 @@ function renderSettings() {
 
 function renderCharts() {
   byId("architectureLayers").innerHTML = state.dashboard.architecture.map((layer) => `
-    <li style="--layer-color: ${LAYER_ACCENTS[layer.name] || "#343bc2"}">
+    <li style="--layer-color: ${LAYER_ACCENTS[layer.name] || "#305c48"}">
       <strong>${escapeHtml(layer.name)}</strong><span>${escapeHtml(layer.desc)}</span>
     </li>`).join("");
 
@@ -552,7 +552,7 @@ function openKnowledgeModal(item) {
       <p class="modal-desc">${escapeHtml(item.desc)}</p>
       <div class="knowledge-modal-meter">
         <strong>就绪度 ${escapeHtml(item.value)}%</strong>
-        <div class="knowledge-bar"><span style="width: ${item.value}%; --bar-color: ${KNOWLEDGE_ACCENTS[item.id] || "#343bc2"}"></span></div>
+        <div class="knowledge-bar"><span style="width: ${item.value}%; --bar-color: ${KNOWLEDGE_ACCENTS[item.id] || "#305c48"}"></span></div>
       </div>
       <p class="muted-text">当前纳管条目：${escapeHtml(item.count)} 项。后续文件解析、权限映射和向量化服务可以从后端继续扩展。</p>
     `
@@ -693,7 +693,7 @@ function setupEvents() {
   byId("openConfigModal").addEventListener("click", openConfigModal);
   byId("openDocumentModal").addEventListener("click", openDocumentModal);
   byId("openAgentWorkspace").addEventListener("click", () => {
-    if (state.selectedAgent) location.href = "./index.html?agent=" + encodeURIComponent(state.selectedAgent.id);
+    if (state.selectedAgent) location.href = "./office.html?agent=" + encodeURIComponent(state.selectedAgent.id);
   });
   byId("openAgentDetailModal").addEventListener("click", openAgentDetailModal);
   byId("knowledgeSearchForm").addEventListener("submit", runKnowledgeSearch);

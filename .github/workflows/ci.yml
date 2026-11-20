@@ -21,6 +21,7 @@ jobs:
       - run: ruff check src tests
       - run: ruff format --check src tests
       - run: mypy --python-version 3.12 src/duke_harness
+      - run: node --test tests/novel-context.test.mjs
       - run: pytest
       - run: python -m json.tool deploy/keycloak/realm-duke.json >/dev/null
 

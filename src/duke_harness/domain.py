@@ -74,6 +74,7 @@ class ContextAddress(BaseModel):
 
 
 class AgentSpec(BaseModel):
+    workspace: Literal["office", "fiction"] = "office"
     id: str
     name: str
     description: str

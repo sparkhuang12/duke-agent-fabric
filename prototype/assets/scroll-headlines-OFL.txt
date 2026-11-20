@@ -1,6 +1,6 @@
-© 2014-2021 Adobe (http://www.adobe.com/).
+© 2017-2022 Adobe (http://www.adobe.com/).
 
-Subset of Noto Sans CJK SC Black, distributed as Duke-Magazine-Display.
+Subset of Noto Serif CJK SC Bold, distributed as Duke-Scroll-Headlines.
 
 -----------------------------------------------------------
  SIL OPEN FONT LICENSE Version 1.1 - 26 February 2007

@@ -1,129 +1,137 @@
 ---
-name: Duke 写作工作室
-description: 用青年杂志的摄影封面和撞色栏目组织中文写作、复核与修订。
+name: Duke 山海手卷
+description: 中文长篇小说工作区，作者可以在一幅青绿山水下编辑章回，对照人物与未解伏笔。
 colors:
-  canvas: "#fffaf2"
-  surface: "#fffefa"
-  ink: "#1c191e"
-  muted: "#605a60"
-  rule: "#ded6ce"
-  rule-dark: "#a49b98"
-  blue: "#302bb9"
-  blue-deep: "#272392"
-  sky: "#c1e8ff"
-  lime: "#e8fa53"
-  pink: "#ffaaca"
+  paper: "#f5f3e9"
+  page: "#f8f6ee"
+  ink: "#1b3933"
+  dim: "#53665c"
+  line: "#bdc7b6"
+  green: "#305c48"
+  seal: "#944631"
+  chapter-current: "#dfe9d9"
+  field-paper: "#fffdf5"
 typography:
-  headline:
-    fontFamily: "Duke Magazine, Noto Sans CJK SC, PingFang SC, Microsoft YaHei, sans-serif"
-    fontSize: "clamp(2.5rem, 4.6vw, 4.45rem)"
-    fontWeight: 900
-    lineHeight: 1.13
-    letterSpacing: "-0.04em"
-  wordmark:
-    fontFamily: "Bricolage Grotesque, PingFang SC, Noto Sans CJK SC, Microsoft YaHei, sans-serif"
-    fontSize: "2.25rem"
-    fontWeight: 800
-    lineHeight: 1
-    letterSpacing: "-0.04em"
-  body:
-    fontFamily: "Instrument Sans, PingFang SC, Noto Sans CJK SC, Microsoft YaHei, sans-serif"
-    fontSize: "1rem"
-    lineHeight: 1.55
+  book-title:
+    fontFamily: "Duke Scroll, Noto Serif CJK SC, Songti SC, SimSun, serif"
+    fontWeight: 750
+    fontSize: "clamp(44px, 5.3vw, 77px)"
+    lineHeight: 1.2
+    letterSpacing: "0.02em"
+  chapter-title:
+    fontFamily: "Duke Scroll, Noto Serif CJK SC, Songti SC, SimSun, serif"
+    fontWeight: 750
+    fontSize: "clamp(30px, 2.7vw, 42px)"
+    lineHeight: 1.38
+    letterSpacing: "-0.035em"
   manuscript:
     fontFamily: "Noto Serif CJK SC, Songti SC, SimSun, serif"
-    fontSize: "1.02rem"
-    lineHeight: 1.95
+    fontSize: "18px"
+    fontWeight: 400
+    lineHeight: 1.88
+  interface:
+    fontFamily: "PingFang SC, Noto Sans CJK SC, Microsoft YaHei, sans-serif"
+    fontSize: "16px"
+    lineHeight: 1.55
+  wordmark:
+    fontFamily: "Georgia, serif"
+    fontWeight: 900
+    fontSize: "36px"
+    lineHeight: 1
+    letterSpacing: "-0.055em"
 rounded:
-  field: "6px"
-  button: "4px"
-  square: "0px"
+  action: "2px"
+  field: "3px"
+  dialog: "5px"
 spacing:
-  field-gap: "0.4rem"
-  form-gap: "1rem"
+  dialog-fields: "0.7rem"
+  chapter-row: "10px"
+  margin-notes: "24px"
 components:
-  button-primary:
-    backgroundColor: "{colors.blue}"
+  primary:
+    backgroundColor: "{colors.green}"
     textColor: "#ffffff"
-    rounded: "{rounded.button}"
-    padding: "0.59rem 1.14rem"
-  button-primary-hover:
-    backgroundColor: "{colors.blue-deep}"
-  button-secondary:
-    backgroundColor: "{colors.surface}"
-    rounded: "{rounded.button}"
-    padding: "0.59rem 1.14rem"
-  input:
-    backgroundColor: "{colors.surface}"
-    rounded: "{rounded.field}"
-    padding: "0.65rem 0.78rem"
-  site-nav:
-    textColor: "{colors.muted}"
-  role-active:
-    backgroundColor: "{colors.lime}"
+    padding: "8px 16px"
+    rounded: "{rounded.action}"
+  quiet:
     textColor: "{colors.ink}"
-    rounded: "{rounded.square}"
-  sheet:
-    backgroundColor: "{colors.surface}"
-  handbook:
-    backgroundColor: "{colors.sky}"
-    textColor: "#192d39"
-    rounded: "{rounded.square}"
-  cover-action:
-    backgroundColor: "{colors.ink}"
-    textColor: "#ffffff"
-    rounded: "{rounded.button}"
-  metric-strip:
-    rounded: "{rounded.square}"
+    rounded: "{rounded.field}"
+    padding: "0.4rem 0.75rem"
+  navigation:
+    textColor: "{colors.dim}"
+  seal:
+    backgroundColor: "{colors.seal}"
+    textColor: "#fff9e9"
+    padding: "3px 9px"
+  chapter-current:
+    backgroundColor: "{colors.chapter-current}"
+    textColor: "#214839"
+    padding: "10px 11px"
+  manuscript:
+    textColor: "{colors.ink}"
+    typography: "{typography.manuscript}"
+    rounded: "{rounded.action}"
+  record:
+    textColor: "{colors.ink}"
+    padding: "0.65rem 0.25rem"
+  dialog-field:
+    backgroundColor: "{colors.field-paper}"
+    rounded: "{rounded.field}"
+    padding: "0.55rem 0.7rem"
+  preview:
+    backgroundColor: "#e9eddf"
+    padding: "0.75rem"
 ---
 
-# Duke 写作工作室
+# Duke 山海手卷
 
 ## Overview
 
-**Creative North Star: "青年杂志编辑部"**
+**Creative North Star: "山海手卷"**
 
-写作台以粉色标题栏搭配编辑桌面摄影，产品首页以荧光黄绿配人物封面摄影。读者进入编辑区后，稿纸、材料和复核意见占据主要阅读空间。
+青绿山水与白鹿铺开一卷浅金色的绢，左侧题写作品名和卷名。画卷下方给正文留出最宽的一栏，作者可以一边写一边核对前文、人物和伏笔。
 
 **Key Characteristics:**
 
-- 大幅摄影与中文粗黑标题并置，封面文字落在纯色色块上。
-- 荧光黄绿标出当前角色，天蓝栏保留交付内容与复核边界。
-- 摄影和标题字体随应用加载，内网也能看到完整的版面。
+- 卷首使用整幅山水，章节正文落在单色纸面。
+- 朱砂印记点出作品类别，未解伏笔使用相同色系。
+- 章回目录、正文和页边注共享水平分隔线和墨绿文字。
 
 ## Colors
 
-蓝紫用于提交动作、当前导航与键盘焦点，深蓝用于悬停。荧光黄绿、粉红、天蓝和墨黑在平台总览中分隔四项指标，数值和单位写在各自色块内。正文使用近白底、墨色文字，辅助说明使用灰色。产品介绍的深色模式调节文字、背景和分隔线，同时保留封面的亮色。
+暖绢色用于页面底色，页头和对话框略亮。深墨绿承载标题与正文，青灰用于卷次、字数与保存状态。青瓷色高亮当前章节，深绿用于主要操作。朱砂用于卷首印记、未解伏笔名称及正文插入光标。
 
 ## Typography
 
-写作台、产品页和平台总览的大标题使用本地 Duke Magazine 粗黑体。产品标题随视口缩放，字号上限为 6rem，由两段完整中文短语组成，第二段下方有略微倾斜的粉色底。Duke 字标和总览大数字使用 Bricolage Grotesque。表单使用无衬线字体，完整稿件使用宋体风格的阅读字体。
+书名与章名使用本地字库 Duke Scroll，文件为 `prototype/assets/scroll-headlines.woff2`。正文使用系统宋体，桌面字号 18px、行高 1.88，手机字号 17px、行高 1.85。章次、工具和保存状态使用无衬线中文。Duke 字标采用 Georgia 衬线字体。
 
-**The Manuscript Rule.** 正文保留原始段落与换行，桌面阅读行宽上限为 70ch。
+**The Manuscript Rule.** 章节编辑与续文预览都保留作者的段落和换行。
 
 ## Layout
 
-共享页头与内容区在宽屏上居中，最大宽度为 1280px。写作台首先呈现粉色标题区与桌面照片，再排入角色栏、主稿纸和右侧手册。720px 及以下使用单列稿纸与三列角色按钮，520px 及以下将工作台照片排在标题下方。产品介绍在 620px 及以下把人物照片置于标题之前，标题按完整短语换行。总览的四色指标带在 720px 及以下折成两列。
+小说首页的卷首图跨越视口，以左侧留白承载书名、右侧保留山势与白鹿。桌面主区居中，最大宽度 1320px，依次为章回目录、正文、人物与伏笔。950px 及以下收紧栏距。730px 及以下改成单列，章节选择器移到正文之前，页边注移到正文之后。365px 及以下两类注释也改为单列。
+
+办公写作台保留六个角色入口、稿纸、角色手册和稿件记录。产品介绍沿用同一幅山水，平台总览则以青瓷、浅绢、雾绿与深墨色分隔指标。各入口由文字导航连接。
 
 ## Elevation & Depth
 
-粗黑横线划出页头与稿纸的起点。封面标题、摄影和手册用相邻色块分层，弹窗用半透明遮罩圈定当前操作。
+窗外内容在弹窗打开时覆以半透明墨绿。阅读区保持平整，以细线与留白分开章节、工具和注释，章回列表通过浅色底纹和左侧墨线标记当前位置。
 
 ## Shapes
 
-封面、角色标签和四色指标使用直角边缘。桌面照片与粉色标题区以斜切边相接，手机上照片横边铺满。输入框和操作按钮使用小圆角，站点标记使用微倾的蓝色星形。
+卷首和正文都使用平直边缘，操作按钮、输入框和弹窗使用小圆角。朱砂印记为矩形。浏览器图标使用 `prototype/assets/scroll-mark.png`。
 
 ## Components
 
-- **写作台封面**使用编辑桌摄影 `prototype/assets/magazine-desk.webp`，黑底「新建稿件」按钮位于粉色标题区。
-- **产品封面**使用人物摄影 `prototype/assets/magazine-editor.webp`。蓝色服装与黄色小册呼应标题色块。
-- **角色栏与手册**随当前角色切换。选中的角色带墨色底线，天蓝手册用小书签标记交付与复核信息。
-- **稿纸**用黑色顶线、淡色边框划分角色说明、事实依据和本轮要求。正文与复核位于同一阅读流程。
-- **导航和操作**以文字和下划线标出当前页，按钮和输入使用带间距的可见焦点。运营视图采用短标题、紧凑列表和文字状态。
+- **卷首**使用 `prototype/assets/shanhai.webp`，书名和卷名由作品数据填入。
+- **章回目录**显示章次和标题，当前章节带位置标识。手机使用带文字标签的原生选择器。
+- **正文编辑器**直接在纸面上编辑。字数、保存状态、「核对前文」和「续写本章」位于正文下方。
+- **书架与设定**共用有标题和关闭按钮的对话框。书架显示作品与章数，人物册和伏笔簿以列表进入编辑。页边注仅呈现当前章节可见的人物与未解伏笔。
+- **续文预览**将候选文字呈现在淡青灰纸面，作者确认「接到正文末尾」后才合入手稿。
 
 ## Do's and Don'ts
 
-- **Do** 让摄影的主体与封面文字各自拥有连续的可读区域。
-- **Do** 保留稿件状态文字以及按钮的可见焦点。
-- **Don't** 把封面摄影延伸到草稿与复核正文背后。
-- **Don't** 拆开产品标题中的短语，留下单个汉字占一行。
+- **Do** 为书名、卷名和正文使用可选择、可缩放的 HTML 文字。
+- **Do** 保留当前章次、保存状态、键盘焦点与续写确认操作。
+- **Don't** 在正文背后铺山水图。
+- **Don't** 将预览中的模型续文直接当作作者已确认的段落。
