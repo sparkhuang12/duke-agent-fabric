@@ -1,11 +1,11 @@
 const PAGE_TITLES = {
-  dashboard: "生成式 AI 办公智能体工作台",
-  agents: "六大办公智能体",
+  dashboard: "平台总览",
+  agents: "智能体",
   knowledge: "组织知识中枢",
-  tasks: "智能体任务流转",
-  audit: "审计日志与安全留痕",
-  roadmap: "建设路线与投资概算",
-  settings: "系统配置与接口清单"
+  tasks: "任务流转",
+  audit: "审计日志",
+  roadmap: "建设路线",
+  settings: "系统配置"
 };
 
 const state = {
@@ -24,37 +24,33 @@ const state = {
 };
 
 const AGENT_ACCENTS = {
-  document: "#1f5e4f",
-  policy: "#576a59",
-  search: "#386b63",
-  meeting: "#a2763f",
-  compare: "#6f675c",
-  review: "#a15a50"
+  document: "#305c48",
+  policy: "#825196",
+  search: "#277c74",
+  meeting: "#a05f19",
+  compare: "#52608b",
+  review: "#ad4737"
 };
 
 const KNOWLEDGE_ACCENTS = {
-  documents: "#1f5e4f",
-  policy: "#576a59",
-  meeting: "#a2763f",
-  template: "#386b63",
-  vector: "#6f675c",
-  permission: "#a15a50"
+  documents: "#305c48",
+  policy: "#825196",
+  meeting: "#a05f19",
+  template: "#277c74",
+  vector: "#52608b",
+  permission: "#ad4737"
 };
 
 const LAYER_ACCENTS = {
-  "应用层": "#1f5e4f",
-  "智能协同层": "#386b63",
-  "模型能力层": "#a2763f",
-  "组织知识层": "#576a59",
-  "基础设施层": "#a15a50"
+  "应用层": "#305c48",
+  "智能协同层": "#277c74",
+  "模型能力层": "#a05f19",
+  "组织知识层": "#825196",
+  "基础设施层": "#ad4737"
 };
 
 function byId(id) {
   return document.getElementById(id);
-}
-
-function themeVar(name, fallback) {
-  return getComputedStyle(document.documentElement).getPropertyValue(name).trim() || fallback;
 }
 
 function emptyState(title, desc) {
@@ -120,7 +116,7 @@ async function request(path, options = {}) {
 }
 
 function showError(error) {
-  const banner = byId("errorBanner");
+  const banner = byId("modalOverlay").open ? byId("modalError") : byId("errorBanner");
   banner.textContent = error instanceof Error ? error.message : String(error);
   banner.classList.remove("hidden");
 }
@@ -161,17 +157,14 @@ function renderRoute() {
   state.route = routeFromHash();
   byId("pageTitle").textContent = PAGE_TITLES[state.route];
   document.querySelectorAll(".side-nav a").forEach((link) => {
-    link.classList.toggle("active", link.dataset.route === state.route);
+    const active = link.dataset.route === state.route;
+    link.classList.toggle("active", active);
+    if (active) link.setAttribute("aria-current", "page");
+    else link.removeAttribute("aria-current");
   });
   document.querySelectorAll(".page").forEach((page) => {
     page.classList.toggle("active", page.dataset.page === state.route);
   });
-  if (state.route === "dashboard") {
-    drawArchitecture();
-  }
-  if (state.route === "roadmap") {
-    drawBudget();
-  }
 }
 
 function renderDashboard() {
@@ -216,7 +209,7 @@ function renderAgents(filter = "") {
   grid.innerHTML = visible
     .map(
       (agent) => `
-        <button class="agent-card ${agent.id === state.selectedAgent?.id ? "active" : ""}" style="--agent-color: ${AGENT_ACCENTS[agent.id] || "#1f5e4f"}" data-id="${agent.id}" type="button">
+        <button aria-pressed="${agent.id === state.selectedAgent?.id}" class="agent-card ${agent.id === state.selectedAgent?.id ? "active" : ""}" style="--agent-color: ${AGENT_ACCENTS[agent.id] || "#305c48"}" data-id="${agent.id}" type="button">
           <span class="agent-icon">${escapeHtml(agent.icon)}</span>
           <h3>${escapeHtml(agent.name)}</h3>
           <p>${escapeHtml(agent.summary)}</p>
@@ -263,14 +256,14 @@ function renderKnowledge() {
     ? state.knowledge
         .map(
           (item) => `
-            <button class="knowledge-card" type="button" data-knowledge="${escapeHtml(item.id)}" style="--agent-color: ${KNOWLEDGE_ACCENTS[item.id] || "#1f5e4f"}">
+            <button class="knowledge-card" type="button" data-knowledge="${escapeHtml(item.id)}" style="--agent-color: ${KNOWLEDGE_ACCENTS[item.id] || "#305c48"}">
               <div class="card-title-row">
                 <strong>${escapeHtml(item.name)}</strong>
                 <span>${escapeHtml(item.count)}项</span>
               </div>
               <p>${escapeHtml(item.desc)}</p>
               <div class="knowledge-bar" aria-label="${escapeHtml(item.name)}就绪度 ${escapeHtml(item.value)}%">
-                <span style="width: ${item.value}%; --bar-color: ${KNOWLEDGE_ACCENTS[item.id] || "#1f5e4f"}"></span>
+                <span style="width: ${item.value}%; --bar-color: ${KNOWLEDGE_ACCENTS[item.id] || "#305c48"}"></span>
               </div>
             </button>
           `
@@ -356,13 +349,13 @@ function renderTasks() {
         <article class="task-card">
           <div class="panel-title-row">
             <div>
-              <p class="eyebrow">${escapeHtml(agent?.name || "智能体任务")}</p>
               <h3>${escapeHtml(task.title)}</h3>
             </div>
             <span class="pill ${statusClass(task.status)}">${escapeHtml(task.status_label || task.status)}</span>
           </div>
           <p>${escapeHtml(task.summary)}</p>
           <div class="task-meta">
+            <span>${escapeHtml(agent?.name || "智能体任务")}</span>
             <span>负责人：${escapeHtml(task.owner)}</span>
             <span>优先级：${escapeHtml(task.priority)}</span>
           </div>
@@ -404,7 +397,9 @@ function renderTasks() {
 function renderStage(stageKey = state.stage) {
   state.stage = stageKey;
   document.querySelectorAll(".stage-tabs button").forEach((button) => {
-    button.classList.toggle("active", button.dataset.stage === stageKey);
+    const active = button.dataset.stage === stageKey;
+    button.classList.toggle("active", active);
+    button.setAttribute("aria-pressed", String(active));
   });
   const items = state.roadmap.stages?.[stageKey] || [];
   byId("stageDetail").innerHTML = items
@@ -443,140 +438,32 @@ function renderSettings() {
     .join("");
 }
 
-function drawRoundedRect(ctx, x, y, width, height, radius) {
-  const r = Math.min(radius, width / 2, height / 2);
-  ctx.beginPath();
-  ctx.moveTo(x + r, y);
-  ctx.arcTo(x + width, y, x + width, y + height, r);
-  ctx.arcTo(x + width, y + height, x, y + height, r);
-  ctx.arcTo(x, y + height, x, y, r);
-  ctx.arcTo(x, y, x + width, y, r);
-  ctx.closePath();
-}
+function renderCharts() {
+  byId("architectureLayers").innerHTML = state.dashboard.architecture.map((layer) => `
+    <li style="--layer-color: ${LAYER_ACCENTS[layer.name] || "#305c48"}">
+      <strong>${escapeHtml(layer.name)}</strong><span>${escapeHtml(layer.desc)}</span>
+    </li>`).join("");
 
-function drawArchitecture() {
-  const canvas = byId("architectureCanvas");
-  if (!canvas || !state.dashboard) {
-    return;
-  }
-  const ctx = canvas.getContext("2d");
-  const dpr = window.devicePixelRatio || 1;
-  const rect = canvas.getBoundingClientRect();
-  if (!rect.width) {
-    return;
-  }
-  canvas.width = Math.round(rect.width * dpr);
-  canvas.height = Math.round((rect.width * 460 / 900) * dpr);
-  ctx.scale(dpr, dpr);
-
-  const width = rect.width;
-  const height = rect.width * 460 / 900;
-  const paper = themeVar("--paper", "#f7f8f5");
-  const surface = themeVar("--surface", "#ffffff");
-  const surface2 = themeVar("--surface-2", "#e5ebe6");
-  const line = themeVar("--line", "#ccd8d1");
-  const ink = themeVar("--ink", "#17231f");
-  const muted = themeVar("--muted", "#66756e");
-  const accent = themeVar("--accent", "#1f5e4f");
-  ctx.clearRect(0, 0, width, height);
-  ctx.fillStyle = paper;
-  ctx.fillRect(0, 0, width, height);
-
-  const layers = state.dashboard.architecture;
-  const margin = Math.max(18, width * 0.035);
-  const layerHeight = (height - margin * 2 - 36) / layers.length;
-  ctx.font = '700 15px Aptos, "Microsoft YaHei", Arial';
-  layers.forEach((layer, index) => {
-    const y = margin + index * layerHeight;
-    drawRoundedRect(ctx, margin, y, width - margin * 2, layerHeight - 9, 12);
-    ctx.fillStyle = index % 2 === 0 ? surface : surface2;
-    ctx.fill();
-    ctx.strokeStyle = line;
-    ctx.stroke();
-
-    ctx.fillStyle = LAYER_ACCENTS[layer.name] || accent;
-    ctx.fillRect(margin, y, 7, layerHeight - 9);
-    ctx.fillStyle = ink;
-    ctx.fillText(layer.name, margin + 22, y + 26);
-    ctx.fillStyle = muted;
-    ctx.font = '500 13px Aptos, "Microsoft YaHei", Arial';
-    ctx.fillText(layer.desc, margin + 120, y + 26);
-    ctx.font = '700 15px Aptos, "Microsoft YaHei", Arial';
-  });
-
-  ctx.strokeStyle = themeVar("--line-strong", "#aebdb5");
-  ctx.lineWidth = 2;
-  ctx.setLineDash([6, 6]);
-  ctx.beginPath();
-  ctx.moveTo(width - margin - 110, margin + 16);
-  ctx.lineTo(width - margin - 110, height - margin - 20);
-  ctx.stroke();
-  ctx.setLineDash([]);
-  ctx.fillStyle = ink;
-  ctx.font = '700 12px Aptos, "Microsoft YaHei", Arial';
-  ctx.fillText("本地安全域", width - margin - 96, height - margin - 24);
-}
-
-function drawBudget() {
-  const canvas = byId("budgetCanvas");
-  if (!canvas) {
-    return;
-  }
-  const budgets = state.roadmap.budgets || [];
-  const ctx = canvas.getContext("2d");
-  const dpr = window.devicePixelRatio || 1;
-  const rect = canvas.getBoundingClientRect();
-  if (!rect.width || budgets.length === 0) {
-    return;
-  }
-  canvas.width = Math.round(rect.width * dpr);
-  canvas.height = Math.round((rect.width * 500 / 900) * dpr);
-  ctx.scale(dpr, dpr);
-
-  const width = rect.width;
-  const height = rect.width * 500 / 900;
-  const paper = themeVar("--paper", "#f7f8f5");
-  const surface2 = themeVar("--surface-2", "#e5ebe6");
-  const ink = themeVar("--ink", "#17231f");
-  const muted = themeVar("--muted", "#66756e");
-  ctx.clearRect(0, 0, width, height);
-  ctx.fillStyle = paper;
-  ctx.fillRect(0, 0, width, height);
-
-  const left = width < 620 ? 92 : 120;
-  const right = 24;
-  const top = 34;
-  const rowHeight = (height - top - 26) / budgets.length;
-  const max = Math.max(...budgets.map((item) => item.value));
-
-  ctx.font = '700 12px Aptos, "Microsoft YaHei", Arial';
-  budgets.forEach((item, index) => {
-    const y = top + index * rowHeight;
-    const barWidth = (width - left - right - 54) * (item.value / max);
-    ctx.fillStyle = muted;
-    ctx.fillText(item.label, 20, y + 20);
-    drawRoundedRect(ctx, left, y + 5, width - left - right - 54, 16, 8);
-    ctx.fillStyle = surface2;
-    ctx.fill();
-    drawRoundedRect(ctx, left, y + 5, barWidth, 16, 8);
-    ctx.fillStyle = Object.values(KNOWLEDGE_ACCENTS)[index % Object.values(KNOWLEDGE_ACCENTS).length];
-    ctx.fill();
-    ctx.fillStyle = ink;
-    ctx.fillText(`${item.value}万`, left + barWidth + 10, y + 20);
-  });
+  const budgets = state.roadmap.budgets;
+  const largest = Math.max(1, ...budgets.map((item) => item.value));
+  byId("budgetChart").innerHTML = budgets.map((item) => `
+    <li><span>${escapeHtml(item.label)}</span>
+      <div aria-hidden="true"><i style="width: ${100 * item.value / largest}%"></i></div>
+      <strong>${escapeHtml(item.value)} 万</strong>
+    </li>`).join("");
 }
 
 function openModal({ eyebrow, title, body }) {
   byId("modalEyebrow").textContent = eyebrow;
   byId("modalTitle").textContent = title;
-  byId("modalBody").innerHTML = body;
+  byId("modalBody").innerHTML = '<p id="modalError" class="error-banner hidden" role="alert"></p>' + body;
   byId("modalOverlay").classList.remove("hidden");
-  byId("modalOverlay").setAttribute("aria-hidden", "false");
+  byId("modalOverlay").showModal();
 }
 
 function closeModal() {
+  byId("modalOverlay").close();
   byId("modalOverlay").classList.add("hidden");
-  byId("modalOverlay").setAttribute("aria-hidden", "true");
   byId("modalBody").innerHTML = "";
 }
 
@@ -665,7 +552,7 @@ function openKnowledgeModal(item) {
       <p class="modal-desc">${escapeHtml(item.desc)}</p>
       <div class="knowledge-modal-meter">
         <strong>就绪度 ${escapeHtml(item.value)}%</strong>
-        <div class="knowledge-bar"><span style="width: ${item.value}%; --bar-color: ${KNOWLEDGE_ACCENTS[item.id] || "#1f5e4f"}"></span></div>
+        <div class="knowledge-bar"><span style="width: ${item.value}%; --bar-color: ${KNOWLEDGE_ACCENTS[item.id] || "#305c48"}"></span></div>
       </div>
       <p class="muted-text">当前纳管条目：${escapeHtml(item.count)} 项。后续文件解析、权限映射和向量化服务可以从后端继续扩展。</p>
     `
@@ -787,6 +674,7 @@ function runPrototypeCheck() {
 
 function renderAll() {
   renderDashboard();
+  renderCharts();
   renderAgents();
   renderAgentDetail();
   renderKnowledge();
@@ -805,7 +693,7 @@ function setupEvents() {
   byId("openConfigModal").addEventListener("click", openConfigModal);
   byId("openDocumentModal").addEventListener("click", openDocumentModal);
   byId("openAgentWorkspace").addEventListener("click", () => {
-    if (state.selectedAgent) location.href = "./index.html?agent=" + encodeURIComponent(state.selectedAgent.id);
+    if (state.selectedAgent) location.href = "./office.html?agent=" + encodeURIComponent(state.selectedAgent.id);
   });
   byId("openAgentDetailModal").addEventListener("click", openAgentDetailModal);
   byId("knowledgeSearchForm").addEventListener("submit", runKnowledgeSearch);
@@ -818,25 +706,18 @@ function setupEvents() {
   });
   byId("closeModal").addEventListener("click", closeModal);
   byId("modalOverlay").addEventListener("click", (event) => {
-    if (event.target.id === "modalOverlay") {
+    if (event.target === byId("modalOverlay")) {
       closeModal();
     }
   });
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && !byId("modalOverlay").classList.contains("hidden")) {
-      closeModal();
-    }
+  byId("modalOverlay").addEventListener("cancel", (event) => {
+    event.preventDefault();
+    closeModal();
   });
-  document.querySelectorAll("[data-open-task]").forEach((button) => button.addEventListener("click", openTaskModal));
   document.querySelectorAll(".stage-tabs button").forEach((button) => {
     button.addEventListener("click", () => {
       renderStage(button.dataset.stage);
-      drawBudget();
     });
-  });
-  window.addEventListener("resize", () => {
-    drawArchitecture();
-    drawBudget();
   });
 }
 

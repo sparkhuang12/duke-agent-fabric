@@ -91,7 +91,8 @@ async def legacy_agent_run(agent_id: str, payload: dict[str, Any], request: Requ
     prompt = str(payload.get("prompt") or payload.get("input") or "").strip()
     if not prompt:
         raise HTTPException(status_code=400, detail="请提供 prompt 或 input")
-    if runtime.agents.get(agent_id) is None:
+    agent = runtime.agents.get(agent_id)
+    if agent is None or agent.workspace != "office":
         raise HTTPException(status_code=404, detail="智能体不存在")
     if not runtime.models.ready:
         model = {

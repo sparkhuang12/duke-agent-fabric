@@ -113,3 +113,30 @@ async def test_writing_desk_revises_only_the_approved_manuscript(settings) -> No
         )
         for conversation in model._history[2:]:
             assert all("第一版完整正文" not in message.content for message in conversation)
+
+
+async def test_fiction_agent_is_separate_from_the_office_desk(settings) -> None:
+    def factory(config):
+        model = ScriptedChatModel([AIMessage(content="信纸在灯下显出了第二行字。")])
+        return Runtime(config, models=ModelRouter(config, models={"fake": model}))
+
+    app = create_app(settings, runtime_factory=factory)
+    async with (
+        app.router.lifespan_context(app),
+        httpx.AsyncClient(transport=httpx.ASGITransport(app=app), base_url="http://test") as client,
+    ):
+        session = (await client.get("/api/v1/workbench/session", headers=HEADERS)).json()
+        assert session["fiction_available"]
+        assert (await client.post("/api/agents/fiction/run", json={"prompt": "续写"})).status_code == 404
+        assert len(session["agents"]) == 6 and all(role["id"] != "fiction" for role in session["agents"])
+        reviewer = {**HEADERS, "X-Duke-Roles": "approver"}
+        assert not (await client.get("/api/v1/workbench/session", headers=reviewer)).json()["fiction_available"]
+        result = await client.post(
+            "/api/v1/runs",
+            headers=HEADERS,
+            json={"agent_id": "fiction", "thread_id": "novel-draft", "input": "续写收到来信的场景。"},
+        )
+        run = result.json()
+        assert run["status"] == "completed" and "信纸" in run["output"]
+        url = f"/api/v1/runs/{run['run_id']}"
+        assert (await client.get(url, headers={**HEADERS, "X-Duke-User": "other"})).status_code in {403, 404}

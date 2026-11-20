@@ -147,7 +147,17 @@ export DUKE_MODEL_FALLBACKS=your-fallback-model
 .venv/bin/duke-agent-fabric --host 127.0.0.1 --port 9090
 ```
 
-打开 `http://127.0.0.1:9090` 进入办公写作台。开发环境可从右上角的「平台总览」进入知识库、任务和审计页面，也可通过 `/docs` 查看 OpenAPI。旧的 `/#agents` 等书签仍可使用。
+打开 `http://127.0.0.1:9090` 进入**山海手卷**。初次打开会看到一部可编辑的示例小说《第十三封来信》。从右上角「作品书架」新建自己的作品，左侧切换章回，中央直接编辑正文，右侧查看当前章节已经出场的人物和未解伏笔。
+
+- 「章节设置」可填写前情提要。「人物」记录身份、动机、关系与首次出场章。「伏笔」可以指定埋下和回收的章回。
+- 「核对前文」与「续写本章」通过已配置的模型网关运行，引用本书当前正文、此前章节的节选和可见设定。续文经作者点击「接到正文末尾」才写入手稿。
+- 作品在当前浏览器按身份自动保存在 IndexedDB。书架支持导出文本。清理站点数据前请导出；跨浏览器或设备不会自动同步。
+
+![山海手卷的小说写作台](docs/images/shanhai-preview.jpg)
+
+[查看手机端写作台](docs/images/shanhai-mobile.jpg)
+
+原有六个办公角色在页尾「办公写作台」或 `/office.html`。旧的 `/?agent=meeting`、`/#agents` 等书签仍可使用。开发环境的「平台总览」保留知识库、任务和审计入口。
 
 ### 从初稿到修订稿
 
@@ -334,7 +344,7 @@ src/duke_harness/
   observability/   metrics and structured logging
 policies/           Rego policies and tests
 skills/             vendored skills, provenance and licenses
-config/agents.json  six built-in agent specifications
+config/agents.json  six office agent specifications and the novel editor
 compose.yaml        production-oriented local stack
 deploy/             single-host, VM, Kubernetes and Keycloak assets
   mysql/            versioned schema bootstrap for privileged migration

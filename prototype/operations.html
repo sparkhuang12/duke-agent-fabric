@@ -7,32 +7,29 @@
       name="description"
       content="面向政务办公的生成式 AI 智能体工作台，覆盖知识检索、任务流转、人工确认、审计留痕和模型网关配置。"
     />
-    <meta name="theme-color" content="#1e3f37" />
+    <meta name="theme-color" content="#f5f3e9" />
     <meta property="og:title" content="生成式 AI 办公智能体平台" />
     <meta property="og:description" content="组织知识中枢、六大办公智能体、任务流转与安全审计的一体化工作台。" />
-    <meta property="og:image" content="./og-preview.svg" />
-    <title>生成式 AI 办公智能体平台</title>
-    <link
-      rel="icon"
-      href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="%231e3f37"/><path d="M18 18h28v6H25v8h17v6H25v8h22v6H18z" fill="%23f3efe6"/></svg>'
-    />
+    <meta property="og:image" content="./assets/shanhai.webp" />
+    <title>平台总览 · Duke</title>
+    <link rel="icon" href="./assets/scroll-mark.png" />
+    <link rel="stylesheet" href="./studio.css" />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
     <a class="skip-link" href="#mainContent">跳到主要内容</a>
-    <div class="app-shell">
+    <header class="studio-header">
+      <div class="studio-bar">
+        <a class="studio-brand" href="./index.html" aria-label="Duke 写作台首页"><i class="studio-mark" aria-hidden="true"></i><b>Duke</b></a>
+        <nav class="studio-nav" aria-label="站点导航">
+          <a href="./index.html">小说手卷</a><a href="./office.html">办公写作台</a><a href="./operations.html" aria-current="page">平台总览</a><a href="./product.html">产品介绍</a>
+        </nav>
+      </div>
+    </header>
+    <div class="app-shell studio-wrap">
       <aside class="sidebar" aria-label="平台导航">
-        <div class="brand-block">
-          <div class="brand-mark" aria-hidden="true">政</div>
-          <div>
-            <p class="eyebrow">内网试运行版</p>
-            <h1>智能体平台</h1>
-          </div>
-        </div>
-
         <nav class="side-nav" aria-label="主导航">
-          <a href="./index.html">写作台</a>
-          <a href="#dashboard" data-route="dashboard" class="active">工作台</a>
+          <a href="#dashboard" data-route="dashboard" class="active">总览</a>
           <a href="#agents" data-route="agents">智能体</a>
           <a href="#knowledge" data-route="knowledge">知识中枢</a>
           <a href="#tasks" data-route="tasks">任务流转</a>
@@ -41,20 +38,12 @@
           <a href="#settings" data-route="settings">系统配置</a>
         </nav>
 
-        <div class="security-card">
-          <span class="status-dot"></span>
-          <div>
-            <strong>本地安全域</strong>
-            <p id="securitySummary">私有化部署 / 数据不出域 / 全程留痕</p>
-          </div>
-        </div>
       </aside>
 
       <main id="mainContent" class="main-surface">
-        <section class="topbar">
+        <section class="topbar" aria-labelledby="pageTitle">
           <div>
-            <p class="eyebrow">平台总览</p>
-            <h2 id="pageTitle">生成式 AI 办公智能体工作台</h2>
+            <h1 id="pageTitle">平台总览</h1>
           </div>
           <div class="topbar-actions">
             <button id="openTaskModal" class="primary-button" type="button">新建任务</button>
@@ -68,7 +57,7 @@
           <div class="workspace-head">
             <div>
               <p class="summary">
-                以组织知识中枢为底座，统一承载公文生成、政策问答、文件检索、会议纪要、文件分析比对与智能审校。
+                查看平台建设概况、示例任务和运行流程。
               </p>
             </div>
             <div id="metricStrip" class="metric-strip" aria-label="平台关键指标">
@@ -83,13 +72,12 @@
             <div class="command-panel">
               <div class="panel-title-row">
                 <div>
-                  <p class="eyebrow">示例办公任务</p>
                   <h3 id="currentTaskTitle">加载中</h3>
                 </div>
                 <button id="runCheck" class="icon-button" type="button">校验</button>
               </div>
               <div class="task-brief">
-                <span>输入</span>
+                <span>示例任务材料</span>
                 <p id="currentTaskSummary">等待接口返回任务信息。</p>
               </div>
               <div id="pipeline" class="pipeline" aria-label="轻量工作流">
@@ -102,18 +90,16 @@
             <div class="architecture-panel">
               <div class="panel-title-row">
                 <div>
-                  <p class="eyebrow">总体架构</p>
-                  <h3>统一底座承载六大场景</h3>
+                  <h3>平台架构</h3>
                 </div>
                 <span class="pill">内外网边界隔离</span>
               </div>
-              <canvas id="architectureCanvas" width="900" height="460" aria-label="平台架构可视化"></canvas>
+              <ol id="architectureLayers" class="layer-list" aria-label="本地安全域内的平台架构"></ol>
             </div>
 
             <div class="audit-panel">
               <div class="panel-title-row">
                 <div>
-                  <p class="eyebrow">安全与可信运行</p>
                   <h3>审计状态</h3>
                 </div>
                 <span class="pill">示例流程</span>
@@ -130,7 +116,6 @@
         <section id="agentsPage" class="page" data-page="agents" aria-label="智能体">
           <div class="section-heading">
             <div>
-              <p class="eyebrow">业务入口</p>
               <h2>六大办公智能体</h2>
             </div>
             <label class="search-box">
@@ -143,7 +128,6 @@
             <div class="detail-panel">
               <div class="panel-title-row">
                 <div>
-                  <p class="eyebrow">选中智能体</p>
                   <h3 id="selectedAgentName">公文生成智能体</h3>
                 </div>
                 <span id="selectedAgentTag" class="pill">核心场景</span>
@@ -168,7 +152,6 @@
             <div class="flow-panel">
               <div class="panel-title-row">
                 <div>
-                  <p class="eyebrow">流程编排</p>
                   <h3>轻量智能体链路</h3>
                 </div>
                 <span id="flowScore" class="score-badge">88%</span>
@@ -179,7 +162,6 @@
             <div class="review-panel">
               <div class="panel-title-row">
                 <div>
-                  <p class="eyebrow">人工确认</p>
                   <h3>审校检查点</h3>
                 </div>
                 <span class="pill amber">需复核</span>
@@ -192,8 +174,7 @@
         <section id="knowledgePage" class="page" data-page="knowledge" aria-label="知识中枢">
           <div class="section-heading">
             <div>
-              <p class="eyebrow">组织知识中枢</p>
-              <h2>分散文件转化为可治理知识资产</h2>
+              <h2>知识分类与检索</h2>
             </div>
             <div class="knowledge-status">
               <span>元数据</span>
@@ -204,7 +185,7 @@
           </div>
           <div class="knowledge-actions">
             <form id="knowledgeSearchForm" class="inline-search">
-              <input name="keyword" placeholder="检索政策、通知、纪要、权限" />
+              <input name="keyword" aria-label="检索关键词" placeholder="检索政策、通知、纪要、权限" />
               <select name="category" aria-label="知识分类">
                 <option value="all">全部知识</option>
                 <option value="documents">历史公文</option>
@@ -221,7 +202,6 @@
             <div class="settings-panel">
               <div class="panel-title-row">
                 <div>
-                  <p class="eyebrow">检索结果</p>
                   <h3>来源可追溯</h3>
                 </div>
                 <span id="searchCount" class="pill">0 条</span>
@@ -231,7 +211,6 @@
             <div class="settings-panel">
               <div class="panel-title-row">
                 <div>
-                  <p class="eyebrow">已入库文件</p>
                   <h3>知识资产目录</h3>
                 </div>
               </div>
@@ -243,10 +222,8 @@
         <section id="tasksPage" class="page" data-page="tasks" aria-label="任务流转">
           <div class="section-heading">
             <div>
-              <p class="eyebrow">任务流转</p>
-              <h2>智能体任务、人工确认与审计留痕</h2>
+              <h2>任务清单</h2>
             </div>
-            <button class="primary-button" type="button" data-open-task>新建任务</button>
           </div>
           <div id="taskGrid" class="task-grid"></div>
         </section>
@@ -254,8 +231,7 @@
         <section id="auditPage" class="page" data-page="audit" aria-label="审计日志">
           <div class="section-heading">
             <div>
-              <p class="eyebrow">可信运行</p>
-              <h2>操作审计、人工确认与安全留痕</h2>
+              <h2>操作记录</h2>
             </div>
             <button id="refreshAudit" class="ghost-button" type="button">刷新日志</button>
           </div>
@@ -267,10 +243,9 @@
             <div class="roadmap-panel">
               <div class="section-heading">
                 <div>
-                  <p class="eyebrow">建设路线</p>
-                  <h2>基础底座先行，核心智能体落地，协同能力扩展</h2>
+                  <h2>建设阶段</h2>
                 </div>
-                <div class="stage-tabs" role="tablist" aria-label="阶段切换">
+                <div class="stage-tabs" role="group" aria-label="阶段切换">
                   <button class="active" type="button" data-stage="foundation">第一阶段</button>
                   <button type="button" data-stage="core">第二阶段</button>
                   <button type="button" data-stage="extension">第三阶段</button>
@@ -282,12 +257,11 @@
             <div class="budget-panel">
               <div class="panel-title-row">
                 <div>
-                  <p class="eyebrow">投资概算</p>
                   <h3>建设期投入分布</h3>
                 </div>
                 <span class="pill">合计 800 万元</span>
               </div>
-              <canvas id="budgetCanvas" width="900" height="500" aria-label="投资概算柱状图"></canvas>
+              <ul id="budgetChart" class="budget-chart" aria-label="投资概算柱状图"></ul>
             </div>
           </div>
         </section>
@@ -297,7 +271,6 @@
             <div class="settings-panel">
               <div class="panel-title-row">
                 <div>
-                  <p class="eyebrow">模型网关</p>
                   <h3>API 配置状态</h3>
                 </div>
                 <span id="modelReadyPill" class="pill amber">待配置</span>
@@ -307,7 +280,6 @@
             <div class="settings-panel">
               <div class="panel-title-row">
                 <div>
-                  <p class="eyebrow">接口清单</p>
                   <h3>后端 API</h3>
                 </div>
               </div>
@@ -333,7 +305,13 @@
         </section>
 
         <footer class="app-footer" aria-label="页面辅助链接">
-          <span>生成式 AI 办公智能体平台</span>
+          <div class="security-card">
+          <span class="status-dot"></span>
+          <div>
+            <strong>本地安全域</strong>
+            <p id="securitySummary">私有化部署 / 数据不出域 / 全程留痕</p>
+          </div>
+        </div>
           <a href="#settings">接口状态</a>
           <a href="#audit">审计记录</a>
           <a href="./product.html">产品介绍</a>
@@ -341,8 +319,8 @@
       </main>
     </div>
 
-    <div id="modalOverlay" class="modal-overlay hidden" aria-hidden="true">
-      <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <dialog id="modalOverlay" class="modal-overlay hidden" aria-labelledby="modalTitle">
+      <div class="modal">
         <div class="modal-head">
           <div>
             <p id="modalEyebrow" class="eyebrow">弹窗</p>
@@ -351,8 +329,8 @@
           <button id="closeModal" class="close-button" type="button" aria-label="关闭">×</button>
         </div>
         <div id="modalBody" class="modal-body"></div>
-      </section>
-    </div>
+      </div>
+    </dialog>
 
     <script src="./app.js"></script>
   </body>

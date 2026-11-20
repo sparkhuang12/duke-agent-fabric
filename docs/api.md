@@ -134,3 +134,8 @@ Clients should use `code` and `retryable`, not parse `message`.
 ## Legacy compatibility
 
 The original `/api/*` prototype routes remain enabled in development so the existing browser UI continues to work. They are disabled in the production Compose profile with `DUKE_EXPOSE_LEGACY_API=false` and should not be used by new clients.
+
+
+### Novel writing
+
+The workbench session returns `fiction_available` when the caller may use the `fiction` agent. The `agents` array remains the office role catalog. The novel desk uses the same authenticated runs, approval and read endpoints. Each request sends a bounded snapshot of the current novel with an idempotency key. Manuscripts are edited and stored locally in the browser. A completed suggestion becomes part of the chapter only when the author accepts it.

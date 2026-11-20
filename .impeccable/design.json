@@ -1,0 +1,266 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-20T01:40:12+00:00",
+  "title": "Design System: Duke 山海手卷",
+  "extensions": {
+    "colorMeta": {
+      "paper": {
+        "displayName": "绢色纸地",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(15% 0.0061 97.4)",
+          "oklch(27% 0.0101 97.4)",
+          "oklch(39% 0.0126 97.4)",
+          "oklch(51% 0.0134 97.4)",
+          "oklch(63% 0.0123 97.4)",
+          "oklch(75% 0.0095 97.4)",
+          "oklch(85% 0.0061 97.4)",
+          "oklch(95% 0.0021 97.4)"
+        ]
+      },
+      "page": {
+        "displayName": "页头绢白",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(15% 0.0049 95.2)",
+          "oklch(27% 0.0081 95.2)",
+          "oklch(39% 0.0101 95.2)",
+          "oklch(51% 0.0108 95.2)",
+          "oklch(63% 0.0099 95.2)",
+          "oklch(75% 0.0076 95.2)",
+          "oklch(85% 0.0049 95.2)",
+          "oklch(95% 0.0017 95.2)"
+        ]
+      },
+      "ink": {
+        "displayName": "深墨绿",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(15% 0.0172 179.3)",
+          "oklch(27% 0.0284 179.3)",
+          "oklch(39% 0.0356 179.3)",
+          "oklch(51% 0.0378 179.3)",
+          "oklch(63% 0.0347 179.3)",
+          "oklch(75% 0.0267 179.3)",
+          "oklch(85% 0.0172 179.3)",
+          "oklch(95% 0.0059 179.3)"
+        ]
+      },
+      "dim": {
+        "displayName": "青灰",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(15% 0.0127 162.3)",
+          "oklch(27% 0.0209 162.3)",
+          "oklch(39% 0.0263 162.3)",
+          "oklch(51% 0.0279 162.3)",
+          "oklch(63% 0.0256 162.3)",
+          "oklch(75% 0.0197 162.3)",
+          "oklch(85% 0.0127 162.3)",
+          "oklch(95% 0.0044 162.3)"
+        ]
+      },
+      "line": {
+        "displayName": "栏间细线",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(15% 0.0117 132.2)",
+          "oklch(27% 0.0194 132.2)",
+          "oklch(39% 0.0243 132.2)",
+          "oklch(51% 0.0258 132.2)",
+          "oklch(63% 0.0237 132.2)",
+          "oklch(75% 0.0183 132.2)",
+          "oklch(85% 0.0117 132.2)",
+          "oklch(95% 0.0040 132.2)"
+        ]
+      },
+      "green": {
+        "displayName": "松绿",
+        "role": "primary",
+        "tonalRamp": [
+          "oklch(15% 0.0271 162.9)",
+          "oklch(27% 0.0448 162.9)",
+          "oklch(39% 0.0562 162.9)",
+          "oklch(51% 0.0597 162.9)",
+          "oklch(63% 0.0548 162.9)",
+          "oklch(75% 0.0422 162.9)",
+          "oklch(85% 0.0271 162.9)",
+          "oklch(95% 0.0093 162.9)"
+        ]
+      },
+      "seal": {
+        "displayName": "朱砂",
+        "role": "secondary",
+        "tonalRamp": [
+          "oklch(15% 0.0502 36.1)",
+          "oklch(27% 0.0829 36.1)",
+          "oklch(39% 0.1040 36.1)",
+          "oklch(51% 0.1105 36.1)",
+          "oklch(63% 0.1015 36.1)",
+          "oklch(75% 0.0782 36.1)",
+          "oklch(85% 0.0502 36.1)",
+          "oklch(95% 0.0173 36.1)"
+        ]
+      },
+      "chapter-current": {
+        "displayName": "青瓷章签",
+        "role": "secondary",
+        "tonalRamp": [
+          "oklch(15% 0.0108 133.5)",
+          "oklch(27% 0.0179 133.5)",
+          "oklch(39% 0.0225 133.5)",
+          "oklch(51% 0.0239 133.5)",
+          "oklch(63% 0.0219 133.5)",
+          "oklch(75% 0.0169 133.5)",
+          "oklch(85% 0.0108 133.5)",
+          "oklch(95% 0.0037 133.5)"
+        ]
+      },
+      "field-paper": {
+        "displayName": "浅色表单",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(15% 0.0049 95.2)",
+          "oklch(27% 0.0080 95.2)",
+          "oklch(39% 0.0101 95.2)",
+          "oklch(51% 0.0107 95.2)",
+          "oklch(63% 0.0098 95.2)",
+          "oklch(75% 0.0076 95.2)",
+          "oklch(85% 0.0049 95.2)",
+          "oklch(95% 0.0017 95.2)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "book-title": {
+        "displayName": "书名"
+      },
+      "chapter-title": {
+        "displayName": "章名"
+      },
+      "manuscript": {
+        "displayName": "章节正文"
+      },
+      "interface": {
+        "displayName": "写作控件"
+      },
+      "wordmark": {
+        "displayName": "Duke 字标"
+      }
+    },
+    "shadows": [],
+    "motion": [],
+    "breakpoints": [
+      {
+        "name": "compact-notes",
+        "value": "950px"
+      },
+      {
+        "name": "single-column",
+        "value": "730px"
+      },
+      {
+        "name": "stack-notes",
+        "value": "365px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "续写操作",
+      "kind": "button",
+      "refersTo": "primary",
+      "description": "提交续写或采纳后续段落。",
+      "html": "<button type=\"button\" class=\"ds-primary\">续写本章</button>",
+      "css": ".ds-primary{border:0;background:var(--green,#305c48);color:#fff;padding:8px 16px;border-radius:2px;font:650 1rem/1.55 var(--sans,\"PingFang SC\",\"Noto Sans CJK SC\",\"Microsoft YaHei\",sans-serif);cursor:pointer}.ds-primary:hover:not(:disabled){background:#204735}.ds-primary:disabled{opacity:.53}.ds-primary:focus-visible{outline:2px solid #396b55;outline-offset:3px}"
+    },
+    {
+      "name": "关闭窗口",
+      "kind": "button",
+      "refersTo": "quiet",
+      "description": "在书架和设定窗口内结束当前操作。",
+      "html": "<button type=\"button\" class=\"ds-quiet\">关闭</button>",
+      "css": ".ds-quiet{background:transparent;color:var(--ink,#1b3933);font:inherit;cursor:pointer;border:1px solid var(--line,#bdc7b6);border-radius:3px;padding:.4rem .75rem}.ds-quiet:focus-visible{outline:2px solid #396b55;outline-offset:3px}"
+    },
+    {
+      "name": "写作导航",
+      "kind": "nav",
+      "refersTo": "navigation",
+      "description": "展示编辑区与两类设定的入口。",
+      "html": "<nav class=\"ds-nav\" aria-label=\"小说写作\"><button type=\"button\" aria-current=\"page\">写作台</button><button type=\"button\">人物</button><button type=\"button\">伏笔</button></nav>",
+      "css": ".ds-nav{display:flex;gap:38px}.ds-nav button{position:relative;background:transparent;cursor:pointer;border:0;padding:0 3px .45rem;color:var(--dim,#53665c);font:550 1rem/1.55 var(--sans,\"PingFang SC\",\"Noto Sans CJK SC\",\"Microsoft YaHei\",sans-serif)}.ds-nav [aria-current]{font-weight:750;color:var(--ink,#1b3933)}.ds-nav [aria-current]:after{content:\"\";position:absolute;bottom:0;height:2px;left:3px;right:3px;background:currentColor}.ds-nav button:focus-visible{outline:2px solid #396b55;outline-offset:3px}"
+    },
+    {
+      "name": "卷首类型印记",
+      "kind": "chip",
+      "refersTo": "seal",
+      "description": "封面上的作品类别。",
+      "html": "<span class=\"ds-seal\">长篇小说</span>",
+      "css": ".ds-seal{display:table;padding:3px 9px;background:var(--seal,#944631);color:#fff9e9;font:600 13px/1.6 var(--song,\"Noto Serif CJK SC\",\"Songti SC\",SimSun,serif);letter-spacing:.08em}"
+    },
+    {
+      "name": "当前章节",
+      "kind": "nav",
+      "refersTo": "chapter-current",
+      "description": "当前章的章次与章名共用一个进入按钮。",
+      "html": "<button type=\"button\" aria-current=\"page\" class=\"ds-entry\"><small>第七回</small><strong>没有寄件人的信</strong></button>",
+      "css": ".ds-entry{text-align:left;display:grid;gap:2px;padding:10px 11px;border:0;border-bottom:1px solid #d5dacf;color:#214839;background:#dfe9d9;box-shadow:inset 3px 0 #427360;cursor:pointer;font-family:var(--sans,\"PingFang SC\",\"Noto Sans CJK SC\",\"Microsoft YaHei\",sans-serif)}.ds-entry small{font-size:12px}.ds-entry strong{font-size:15px;font-weight:600;overflow-wrap:anywhere}.ds-entry:hover{background:#e4eadd}.ds-entry:focus-visible{outline:2px solid #396b55;outline-offset:3px}"
+    },
+    {
+      "name": "章节正文",
+      "kind": "input",
+      "refersTo": "manuscript",
+      "description": "以整段中文直接编辑手稿。",
+      "html": "<textarea class=\"ds-body\" rows=\"5\" aria-label=\"章节正文\">他把信纸摊在窗台上。纸上只有一句话。</textarea>",
+      "css": ".ds-body{display:block;width:100%;min-height:210px;padding:0 .15rem 0 0;resize:none;background:transparent;border:0;border-radius:2px;color:var(--ink,#1b3933);font:400 18px/1.88 var(--song,\"Noto Serif CJK SC\",\"Songti SC\",SimSun,serif);caret-color:var(--seal,#944631);overflow:auto}.ds-body:focus-visible{outline:1px dashed #839a87;outline-offset:4px}@media(max-width:730px){.ds-body{min-height:185px;font-size:17px;line-height:1.85}}"
+    },
+    {
+      "name": "书架记录",
+      "kind": "card",
+      "refersTo": "record",
+      "description": "书名下面列出作品状态与章数。",
+      "html": "<button class=\"ds-record\" type=\"button\"><strong>第十三封来信</strong><small>当前作品 · 4 个章节</small></button>",
+      "css": ".ds-record{text-align:left;display:grid;gap:3px;background:transparent;color:var(--ink,#1b3933);font:1rem/1.55 var(--sans,\"PingFang SC\",\"Noto Sans CJK SC\",\"Microsoft YaHei\",sans-serif);border:0;border-bottom:1px solid var(--line,#bdc7b6);padding:.65rem .25rem;overflow-wrap:anywhere;cursor:pointer}.ds-record small{color:var(--dim,#53665c)}.ds-record:hover{background:#e4eadd}.ds-record:focus-visible{outline:2px solid #396b55;outline-offset:3px}"
+    },
+    {
+      "name": "设定字段",
+      "kind": "input",
+      "refersTo": "dialog-field",
+      "description": "人物、章节、伏笔的命名字段。",
+      "html": "<label class=\"ds-field\">姓名<input value=\"沈砚\"></label>",
+      "css": ".ds-field{display:grid;gap:.3rem;font:650 .87rem var(--sans,\"PingFang SC\",\"Noto Sans CJK SC\",\"Microsoft YaHei\",sans-serif);color:var(--ink,#1b3933)}.ds-field input{min-width:0;padding:.55rem .7rem;background:#fffdf5;color:var(--ink,#1b3933);border:1px solid #a7b5a3;border-radius:3px;font:inherit;font-size:.95rem}.ds-field input:focus-visible{outline:2px solid #396b55;outline-offset:3px}"
+    },
+    {
+      "name": "续文预览",
+      "kind": "custom",
+      "refersTo": "preview",
+      "description": "在手稿外呈现候选段落。",
+      "html": "<div class=\"ds-result\" aria-label=\"续文预览\">楼下传来铃声。第一声很远，第二声已经到了门前。</div>",
+      "css": ".ds-result{white-space:pre-wrap;overflow-wrap:anywhere;max-height:38vh;overflow:auto;color:var(--ink,#1b3933);font:1rem/1.8 var(--song,\"Noto Serif CJK SC\",\"Songti SC\",SimSun,serif);padding:.75rem;background:#e9eddf}"
+    }
+  ],
+  "narrative": {
+    "northStar": "山海手卷",
+    "overview": "青绿山水与白鹿铺开一卷浅金色的绢，左侧题写作品名和卷名。画卷下方给正文留出最宽的一栏，作者可以一边写一边核对前文、人物和伏笔。",
+    "keyCharacteristics": [
+      "卷首使用整幅山水，章节正文落在单色纸面。",
+      "朱砂印记点出作品类别，未解伏笔使用相同色系。",
+      "章回目录、正文和页边注共享水平分隔线和墨绿文字。"
+    ],
+    "rules": [
+      {
+        "name": "The Manuscript Rule",
+        "body": "章节编辑与续文预览都保留作者的段落和换行。",
+        "section": "typography"
+      }
+    ],
+    "dos": [
+      "Do 为书名、卷名和正文使用可选择、可缩放的 HTML 文字。",
+      "Do 保留当前章次、保存状态、键盘焦点与续写确认操作。"
+    ],
+    "donts": [
+      "Don't 在正文背后铺山水图。",
+      "Don't 将预览中的模型续文直接当作作者已确认的段落。"
+    ]
+  }
+}

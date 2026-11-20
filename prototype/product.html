@@ -5,74 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="生成式 AI 办公智能体平台官网首页，面向政务和组织办公场景，提供知识中枢、智能体协同、人工确认和安全审计能力。"
+      content="山海手卷提供小说创作与办公写作两个入口。"
     />
-    <meta name="theme-color" content="#1e3f37" />
-    <meta property="og:title" content="生成式 AI 办公智能体平台" />
+    <meta name="theme-color" content="#f5f3e9" />
+    <meta property="og:title" content="山海手卷 · Duke 写作平台" />
     <meta property="og:description" content="把组织知识、办公流程和模型能力收拢到一个安全可控的智能体平台。" />
-    <meta property="og:image" content="./assets/secure-office-hero.png" />
-    <title>生成式 AI 办公智能体平台官网</title>
-    <link
-      rel="icon"
-      href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="%231e3f37"/><path d="M18 18h28v6H25v8h17v6H25v8h22v6H18z" fill="%23f3efe6"/></svg>'
-    />
+    <meta property="og:image" content="./assets/shanhai.webp" />
+    <title>山海手卷与办公写作 · Duke</title>
+    <link rel="icon" href="./assets/scroll-mark.png" />
+    <link rel="stylesheet" href="./studio.css" />
     <link rel="stylesheet" href="./product.css" />
   </head>
   <body>
     <a class="skip-link" href="#main">跳到主要内容</a>
 
-    <header class="site-header">
-      <a class="brand" href="./product.html" aria-label="生成式 AI 办公智能体平台首页">
-        <span class="brand-mark">政</span>
-        <span>
-          <strong>智能体平台</strong>
-          <small>AI office agent platform</small>
-        </span>
-      </a>
-
-      <nav class="site-nav" aria-label="官网导航">
-        <a href="#capabilities">能力</a>
-        <a href="#workflow">流程</a>
-        <a href="#security">安全</a>
-        <a href="./index.html">写作台</a>
-      </nav>
-
-      <a class="nav-cta" href="#contact">预约演示</a>
+    <header class="studio-header">
+      <div class="studio-bar">
+        <a class="studio-brand" href="./product.html" aria-label="Duke 产品首页"><i class="studio-mark" aria-hidden="true"></i><b>Duke</b></a>
+        <nav class="studio-nav" aria-label="产品导航">
+          <a href="#capabilities">办公角色</a><a href="#workflow">稿件流程</a><a href="#security">安全</a><a href="#contact">使用入口</a>
+        </nav>
+        <div class="studio-tools"><a href="./index.html">打开小说手卷</a></div>
+      </div>
     </header>
 
-    <main id="main">
+    <main id="main" class="studio-wrap">
       <section class="hero section reveal">
         <div class="hero-copy">
-          <p class="hero-kicker">政务办公智能体平台</p>
-          <h1><span>可信办公</span><span>智能体平台</span></h1>
-          <p class="hero-text">
-            把组织知识、办公流程和模型能力统一到可复核、可留痕的入口。
-          </p>
+          <h1><span>落笔成章，</span><span>山海入卷。</span></h1>
+          <p class="hero-text">在章回之间整理前情，记下人物动机与尚未揭晓的线索。也可以进入办公写作台，与六个专业角色协作起稿。</p>
           <div class="hero-actions">
-            <a class="button primary" href="#contact">预约演示</a>
-            <a class="button secondary" href="./index.html">进入写作台</a>
+            <a class="button primary" href="./index.html">打开小说手卷</a>
+            <a class="button secondary" href="./office.html">进入办公写作台</a>
           </div>
         </div>
-
-        <figure class="hero-media">
-          <img
-            src="./assets/secure-office-hero.png"
-            alt="安全办公指挥中心内的文件、屏幕和知识流程可视化"
-            width="1600"
-            height="1000"
-            fetchpriority="high"
-          />
-        </figure>
+        <figure class="hero-media"><img src="./assets/shanhai.webp" alt="青绿山水间，白鹿立在石门旁" width="1817" height="866" fetchpriority="high" /></figure>
       </section>
 
       <section class="proof-strip section reveal" aria-label="平台交付边界">
         <article>
           <strong>私有化部署</strong>
-          <span>模型、知识和审计数据留在本地安全域</span>
+          <span>支持在组织内网部署模型、知识库和审计服务</span>
         </article>
         <article>
           <strong>人工确认</strong>
-          <span>正式输出先复核，再导出和归档</span>
+          <span>由另一位授权人员核对稿件、记录意见</span>
         </article>
         <article>
           <strong>统一网关</strong>
@@ -82,47 +59,24 @@
 
       <section id="capabilities" class="section capabilities reveal">
         <div class="section-copy">
-          <h2>六个办公场景，共用一套底座</h2>
-          <p>智能体不是孤立工具，而是共享知识、权限、审计和模型网关的业务入口。</p>
+          <h2>六个办公写作角色</h2>
+          <p>按手上的材料和要交付的结果进入对应工作区。</p>
         </div>
-
         <div class="capability-grid">
-          <article class="capability-card large">
-            <span>公文生成</span>
-            <h3>从模板和依据生成可复核初稿</h3>
-            <p>围绕同一稿件保留文种、主送对象和依据，通过复核后可继续逐轮修订。</p>
-          </article>
-          <article class="capability-card">
-            <span>政策问答</span>
-            <h3>回答绑定来源</h3>
-            <p>召回政策片段，标注版本、条款和适用范围。</p>
-          </article>
-          <article class="capability-card tinted">
-            <span>文件检索</span>
-            <h3>先过权限，再给结果</h3>
-            <p>融合关键词、语义召回和密级过滤。</p>
-          </article>
-          <article class="capability-card image-card">
-            <img src="./assets/workflow-map.png" alt="办公任务节点流转示意图" width="1200" height="800" loading="lazy" />
-          </article>
-          <article class="capability-card">
-            <span>会议纪要</span>
-            <h3>沉淀决议和责任</h3>
-            <p>从记录中提取议题、责任单位、完成时限和待办事项。</p>
-          </article>
-          <article class="capability-card deep">
-            <span>比对审校</span>
-            <h3>发现变化、冲突和风险</h3>
-            <p>对版本差异、政策引用、敏感表述和格式规范给出复核建议。</p>
-          </article>
+          <a href="./office.html?agent=document"><h3>公文起草</h3><p>从文种、主送对象与依据起笔，按复核意见逐轮改稿。</p></a>
+          <a href="./office.html?agent=policy"><h3>政策研判</h3><p>核对问题与条款，列明适用范围和仍待确认之处。</p></a>
+          <a href="./office.html?agent=search"><h3>文件检索</h3><p>按主题和时间筛选资料，定位可以引用的原文。</p></a>
+          <a href="./office.html?agent=meeting"><h3>会议纪要</h3><p>从发言记录中整理议题、决议、责任单位和时限。</p></a>
+          <a href="./office.html?agent=compare"><h3>版本比对</h3><p>对照新旧两稿，找到条款、主体和日期的变化。</p></a>
+          <a href="./office.html?agent=review"><h3>文稿审校</h3><p>逐段定位需要核实的原句，给出具体修改建议。</p></a>
         </div>
       </section>
 
       <section id="workflow" class="section workflow reveal">
         <div class="workflow-panel">
           <div class="section-copy">
-            <h2>每一次生成，都走完整闭环</h2>
-            <p>平台把 AI 能力限制在可解释、可追溯、可审批的办公流程里。</p>
+            <h2>一份稿件怎样定下来</h2>
+            <p>从材料到正文，每一轮处理都有可查的依据。</p>
           </div>
 
           <ol class="workflow-steps">
@@ -130,14 +84,14 @@
             <li><strong>权限识别</strong><span>按角色、部门、密级限定可用知识范围。</span></li>
             <li><strong>知识检索</strong><span>召回模板、政策、历史公文和会议材料。</span></li>
             <li><strong>智能体处理</strong><span>生成、抽取、比对或审校，保留来源证据。</span></li>
-            <li><strong>人工确认</strong><span>关键输出经过复核后进入导出和留痕。</span></li>
+            <li><strong>人工确认</strong><span>记录复核意见，保留已确认的版本。</span></li>
           </ol>
         </div>
       </section>
 
       <section id="security" class="section security reveal">
         <div class="security-copy">
-          <h2>安全不是附加模块，是平台运行方式</h2>
+          <h2>资料与复核权限</h2>
           <p>适合在内网、专有云或本地环境部署，模型调用、知识检索和用户操作都进入统一审计链路。</p>
         </div>
 
@@ -163,21 +117,21 @@
 
       <section id="contact" class="section contact reveal">
         <div>
-          <h2>先从一个可验收的办公场景开始</h2>
-          <p>建议从政策问答、文件检索和公文辅助生成切入，跑通知识入库、权限过滤、人工确认和审计留痕。</p>
+          <h2>从第一章开始</h2>
+          <p>打开书架，新建作品，写下第一句。</p>
         </div>
         <div class="contact-actions">
-          <a class="button primary" href="./index.html#settings">预约演示</a>
-          <a class="button secondary" href="./index.html">进入写作台</a>
+          <a class="button secondary" href="./office.html#settings">查看模型配置</a>
+          <a class="button primary" href="./index.html">打开小说手卷</a>
         </div>
       </section>
     </main>
 
     <footer class="site-footer">
-      <span>生成式 AI 办公智能体平台</span>
+      <span>Duke Agent Fabric</span>
       <a href="./index.html">写作台</a>
-      <a href="./index.html#settings">接口文档</a>
-      <a href="#contact">隐私与使用条款</a>
+      <a href="./office.html#settings">接口状态</a>
+      <a href="#security">资料与权限</a>
     </footer>
 
     <script src="./product.js"></script>

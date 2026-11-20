@@ -128,17 +128,19 @@ def create_app(settings: Settings | None = None, runtime_factory: RuntimeFactory
         principal: Principal = Depends(principal_from_headers),
     ) -> dict[str, Any]:
         runtime: Runtime = request.app.state.runtime
+        available = [agent for agent in runtime.agents.list() if set(agent.allowed_roles).intersection(principal.roles)]
         return {
             "tenant_id": principal.tenant_id,
             "user_id": principal.user_id,
             "can_review": bool({"approver", "security_approver"}.intersection(principal.roles)),
             "model_configured": runtime.models.ready,
+            "fiction_available": any(agent.id == "fiction" for agent in available),
             "agents": [
                 agent.model_dump(
                     include={"id", "name", "role_title", "description", "deliverable", "boundary", "require_approval"}
                 )
-                for agent in runtime.agents.list()
-                if set(agent.allowed_roles).intersection(principal.roles)
+                for agent in available
+                if agent.workspace == "office"
             ],
         }
 

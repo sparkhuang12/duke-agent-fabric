@@ -68,19 +68,23 @@ def wait_for_server(base_url: str, process: subprocess.Popen[str]) -> None:
 
 def assert_dom_contains(base_url: str) -> None:
     dom = run_chrome(["--dump-dom", base_url]).stdout
-    missing = [term for term in ("办公写作台", "角色手册", "稿件记录", "政策研判", "模型待配置") if term not in dom]
+    for term in ("第十三封来信", "章回目录", "没有寄件人的信", "出场人物", "未解伏笔", "续写本章"):
+        if term not in dom:
+            raise AssertionError(f"Novel desk missing term: {term}")
+    dom = run_chrome(["--dump-dom", base_url + "/office.html"]).stdout
+    missing = [term for term in ("写作工作室", "角色手册", "稿件记录", "政策研判", "模型待配置") if term not in dom]
     if missing:
         raise AssertionError(f"Writing desk missing terms: {missing}")
     dom = run_chrome(["--dump-dom", base_url + "/operations.html"]).stdout
     required_terms = [
-        "生成式 AI 办公智能体工作台",
+        "平台总览",
         "公文生成智能体",
         "政策问答智能体",
         "文件检索智能体",
         "会议纪要智能体",
         "文件分析比对智能体",
         "智能审校智能体",
-        "组织知识中枢",
+        "知识分类与检索",
         "任务流转",
         "审计日志",
         "文件入库",
@@ -107,7 +111,7 @@ def inspect_screenshot(path: Path, min_width: int, min_height: int) -> None:
                 pixel = rgb.getpixel((x, y))
                 sampled.append(pixel)
                 total += 1
-                if pixel not in {(245, 247, 248), (255, 255, 255), (248, 251, 250)}:
+                if pixel not in {(245, 243, 233), (255, 255, 255), (255, 254, 250)}:
                     non_background += 1
 
         unique_colors = len(set(sampled))
