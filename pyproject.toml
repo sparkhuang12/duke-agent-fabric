@@ -31,7 +31,7 @@ postgres = [
   "psycopg[binary,pool]>=3.2,<4",
 ]
 production = [
-  "langgraph-checkpoint-redis>=0.5.2,<0.6",
+  "langgraph-checkpoint-redis>=0.5.2,<0.7",
   "PyMySQL>=1.1,<2",
   "redis>=7.4,<8",
   "SQLAlchemy>=2.0,<3",
