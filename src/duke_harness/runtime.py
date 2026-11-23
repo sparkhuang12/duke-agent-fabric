@@ -12,8 +12,6 @@ from duke_harness.models.router import ModelRouter
 from duke_harness.policy.client import PolicyClient
 from duke_harness.resilience.run_locks import RunLockManager
 from duke_harness.resilience.work_pool import BoundedWorkPool
-from duke_harness.skills.loader import SkillRegistry
-from duke_harness.tools.office import ToolRegistry
 
 
 class Runtime:
@@ -27,8 +25,6 @@ class Runtime:
             short_term_ttl_seconds=settings.short_term_ttl_seconds,
         )
         self.agents = AgentRegistry(settings.agent_config_path)
-        self.skills = SkillRegistry(settings.skills_manifest_path)
-        self.tools = ToolRegistry()
         self.policies = PolicyClient(
             base_url=settings.opa_url,
             decision_path=settings.opa_decision_path,
@@ -57,9 +53,6 @@ class Runtime:
             contexts=self.contexts,
             policies=self.policies,
             models=self.models,
-            tools=self.tools,
-            skills=self.skills,
-            max_tool_calls=settings.max_tool_calls,
         ).build(self.checkpoints.saver)
         self.runner = HarnessRunner(
             graph=self.graph,

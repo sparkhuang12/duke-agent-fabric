@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 
 from duke_harness.domain import AgentSpec
+from duke_harness.resilience.errors import UnknownAgentError
 
 
 class AgentRegistryError(RuntimeError):
@@ -27,8 +28,8 @@ class AgentRegistry:
         registry = {agent.id: agent for agent in agents}
         if len(registry) != len(agents):
             raise AgentRegistryError("agent ids must be unique")
-        if not registry:
-            raise AgentRegistryError("at least one agent is required")
+        if set(registry) != {"fiction"}:
+            raise AgentRegistryError("the writing desk requires exactly the fiction editor")
         return registry
 
     def get(self, agent_id: str) -> AgentSpec | None:
@@ -37,7 +38,7 @@ class AgentRegistry:
     def require(self, agent_id: str) -> AgentSpec:
         agent = self.get(agent_id)
         if agent is None:
-            raise AgentRegistryError(f"unknown agent: {agent_id}")
+            raise UnknownAgentError(f"unknown agent: {agent_id}")
         return agent
 
     def list(self) -> list[AgentSpec]:

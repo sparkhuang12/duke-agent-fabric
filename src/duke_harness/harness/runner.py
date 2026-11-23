@@ -72,16 +72,13 @@ class HarnessRunner:
             previous = self.repository.get_idempotent_run(address, request.idempotency_key)
             if previous is not None:
                 return previous
-        metadata = dict(request.metadata)
-        if request.writing_brief is not None:
-            metadata["writing_brief"] = request.writing_brief.model_dump()
         record = RunRecord(
             run_id=new_id("run"),
             address=address,
             status=RunStatus.running,
-            input=request.model_input,
+            input=request.input,
             trace_id=new_id("trace"),
-            metadata=metadata,
+            metadata=dict(request.metadata),
             security_level=request.security_level,
             memory_scope=request.memory_scope,
         )
@@ -100,7 +97,6 @@ class HarnessRunner:
                     "agent": agent.model_dump(mode="json"),
                     "messages": [],
                     "policy_decisions": [],
-                    "tool_call_count": 0,
                     "status": "running",
                     "security_level": request.security_level.value,
                     "memory_scope": request.memory_scope,
@@ -224,7 +220,6 @@ class HarnessRunner:
                     message=str(result.get("denial_reason", "operation denied")),
                     stage="policy",
                 )
-        record.usage["tool_calls"] = int(result.get("tool_call_count", 0))
         return record
 
     @staticmethod

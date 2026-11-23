@@ -37,15 +37,7 @@ subject_allowed if {
 
 subject_allowed if approval_access
 
-tool_allowed if {
-	input.action == "tool.call"
-	input.resource.tool_name in input.agent.allowed_tools
-}
-
-non_tool_action if input.action != "tool.call"
-
-action_allowed if tool_allowed
-action_allowed if non_tool_action
+action_allowed if input.action in {"agent.invoke", "agent.output", "context.read", "run.read", "run.approve"}
 
 agent_role_allowed if input.action == "run.approve"
 

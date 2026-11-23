@@ -1,22 +1,5 @@
-# Production adoption decisions
+# 山海手卷待验证事项
 
-## Decided defaults
-
-- [x] Support protected single-host, private-cloud VM and Kubernetes deployments.
-- [x] Use self-hosted Keycloak/OIDC; map `sub`, tenant, department, realm roles and clearance from signed access tokens.
-- [x] Use Redis 8 for seven-day short-term conversations and LangGraph checkpoints.
-- [x] Use MySQL 8.4 for approved long-term memory and minimal run/audit evidence; scrub short-term run payloads after seven days and delete long-term records after 365 days.
-- [x] Prohibit data egress; allow only explicitly listed self-hosted OpenAI-compatible gateways.
-- [x] Require `security_approver` review for confidential or secret runs.
-- [x] Enforce four-eyes approval: the reviewer must be a different user in the same tenant.
-- [x] Serialize cross-replica approval resume with expiring Redis run leases.
-
-## Installation acceptance work
-
-- [ ] Measure expected concurrency, peak request rate, P95 latency and maximum approval backlog.
-- [ ] Build release-blocking evaluation datasets and thresholds for all six agents.
-- [ ] Select the actual on-premises models and test the primary/fallback quality and capacity.
-- [ ] Integrate the target secret manager and internal image registry.
-- [ ] Define backup location, legal-hold exceptions and tenant deletion/export procedures.
-- [ ] Decide whether the workload needs a durable external run queue beyond the bounded in-process pool.
-- [ ] Run load, restore, penetration, prompt-injection and cross-tenant isolation tests.
+- 用跨章样稿评测不同模型的叙事视角、人物动机与伏笔连续性。
+- 使用目标部署的模型测试长篇写作请求时延、并发容量及备用网关切换。
+- 多人部署前验证备份恢复、账号隔离与服务端数据保留策略。

@@ -8,27 +8,25 @@ from duke_harness.context.repository import SQLiteContextRepository
 from duke_harness.domain import ContextAddress, RunRecord, RunStatus, utc_now
 
 
-def test_agent_and_tenant_namespaces_are_isolated(tmp_path: Path) -> None:
+def test_manuscript_and_tenant_namespaces_are_isolated(tmp_path: Path) -> None:
     repository = SQLiteContextRepository(tmp_path / "context.db")
     manager = ContextManager(repository)
-    document = ContextAddress(tenant_id="tenant-a", user_id="alice", agent_id="document", thread_id="same-thread")
-    policy = ContextAddress(tenant_id="tenant-a", user_id="alice", agent_id="policy", thread_id="same-thread")
-    other_tenant = ContextAddress(tenant_id="tenant-b", user_id="alice", agent_id="document", thread_id="same-thread")
+    first = ContextAddress(tenant_id="tenant-a", user_id="alice", agent_id="fiction", thread_id="first-book")
+    second = first.model_copy(update={"thread_id": "second-book"})
+    other_tenant = first.model_copy(update={"tenant_id": "tenant-b"})
 
-    manager.record_turn(document, "run-1", "机密预算是多少？", "预算内容仅属于 document 上下文")
-    repository.add_memory(document, content="document-private-memory", kind="fact")
-
-    assert "预算内容" in manager.load(document, "预算").recent_messages[-1].content
-    assert manager.load(policy, "预算").recent_messages == []
-    assert manager.load(policy, "memory").memories == []
-    assert manager.load(other_tenant, "预算").recent_messages == []
-    assert document.namespace != policy.namespace != other_tenant.namespace
+    manager.record_turn(first, "run-1", "谁认出了桥？", "沈砚认出了桥。")
+    repository.add_memory(first, content="沈砚曾住在桥头", kind="fact")
+    assert "沈砚" in manager.load(first, "桥").recent_messages[-1].content
+    for address in (second, other_tenant):
+        snapshot = manager.load(address, "桥")
+        assert snapshot.recent_messages == [] and snapshot.memories == []
 
 
 def test_context_budget_keeps_recent_messages_without_cross_namespace_reads(tmp_path: Path) -> None:
     repository = SQLiteContextRepository(tmp_path / "context.db")
     manager = ContextManager(repository, recent_messages=4, max_chars=120, summary_chars=40)
-    address = ContextAddress(tenant_id="t", user_id="u", agent_id="search", thread_id="thread")
+    address = ContextAddress(tenant_id="t", user_id="u", agent_id="fiction", thread_id="thread")
     for index in range(6):
         manager.record_turn(address, f"run-{index}", f"question-{index}-" + "x" * 30, f"answer-{index}-" + "y" * 30)
 
@@ -41,7 +39,7 @@ def test_context_budget_keeps_recent_messages_without_cross_namespace_reads(tmp_
 def test_context_retention_supports_dry_run_before_delete(tmp_path: Path) -> None:
     repository = SQLiteContextRepository(tmp_path / "context.db")
     manager = ContextManager(repository)
-    address = ContextAddress(tenant_id="t", user_id="u", agent_id="search", thread_id="retention")
+    address = ContextAddress(tenant_id="t", user_id="u", agent_id="fiction", thread_id="retention")
     manager.record_turn(address, "run", "question", "answer")
     repository.add_memory(address, content="memory")
     cutoff = utc_now() + timedelta(days=1)
@@ -56,7 +54,7 @@ def test_context_retention_supports_dry_run_before_delete(tmp_path: Path) -> Non
 def test_context_filters_items_after_clearance_is_reduced(tmp_path: Path) -> None:
     repository = SQLiteContextRepository(tmp_path / "context.db")
     manager = ContextManager(repository)
-    address = ContextAddress(tenant_id="t", user_id="u", agent_id="search", thread_id="classified")
+    address = ContextAddress(tenant_id="t", user_id="u", agent_id="fiction", thread_id="classified")
     manager.record_turn(
         address,
         "run",
@@ -77,7 +75,7 @@ def test_context_filters_items_after_clearance_is_reduced(tmp_path: Path) -> Non
 
 def test_stale_pending_approval_is_expired_by_maintenance(tmp_path: Path) -> None:
     repository = SQLiteContextRepository(tmp_path / "context.db")
-    address = ContextAddress(tenant_id="t", user_id="u", agent_id="document", thread_id="approval")
+    address = ContextAddress(tenant_id="t", user_id="u", agent_id="fiction", thread_id="approval")
     record = RunRecord(
         run_id="run-expiring",
         address=address,
@@ -106,7 +104,7 @@ def test_stale_pending_approval_is_expired_by_maintenance(tmp_path: Path) -> Non
 
 def test_short_term_run_payload_is_scrubbed_after_seven_days(tmp_path: Path) -> None:
     repository = SQLiteContextRepository(tmp_path / "context.db")
-    address = ContextAddress(tenant_id="t", user_id="u", agent_id="search", thread_id="short-run")
+    address = ContextAddress(tenant_id="t", user_id="u", agent_id="fiction", thread_id="short-run")
     stale_at = utc_now() - timedelta(days=8)
     record = RunRecord(
         run_id="run-short-retention",
@@ -154,21 +152,21 @@ def test_short_term_run_payload_is_scrubbed_after_seven_days(tmp_path: Path) -> 
 
 def test_long_approved_draft_keeps_instruction_opening_and_deadline(tmp_path: Path) -> None:
     manager = ContextManager(SQLiteContextRepository(tmp_path / "drafts.db"), max_chars=110, recent_messages=4)
-    address = ContextAddress(tenant_id="t", user_id="u", agent_id="document", thread_id="draft")
+    address = ContextAddress(tenant_id="t", user_id="u", agent_id="fiction", thread_id="draft")
     manager.record_turn(address, "old", "旧要求", "旧内容" * 80)
-    manager.record_turn(address, "latest", "只修改报送日期", "各处室：" + "中间内容" * 100 + "截止十二月十日。")
+    manager.record_turn(address, "latest", "保留桥头的铃声", "雨停了。" + "中间内容" * 100 + "桥头响起铃声。")
     snapshot = manager.load(address, "改稿")
     assert snapshot.truncated and snapshot.char_count <= 110
     assert [message.run_id for message in snapshot.recent_messages] == ["latest", "latest"]
     prompt, draft = snapshot.recent_messages
-    assert prompt.content == "只修改报送日期"
-    assert draft.content.startswith("各处室：") and draft.content.endswith("截止十二月十日。")
+    assert prompt.content == "保留桥头的铃声"
+    assert draft.content.startswith("雨停了。") and draft.content.endswith("桥头响起铃声。")
     assert "中段省略" in draft.content
 
 
 def test_summary_covers_turn_before_recent_window_without_restricted_content(tmp_path: Path) -> None:
     manager = ContextManager(SQLiteContextRepository(tmp_path / "drafts.db"), recent_messages=4)
-    address = ContextAddress(tenant_id="t", user_id="u", agent_id="document", thread_id="draft")
+    address = ContextAddress(tenant_id="t", user_id="u", agent_id="fiction", thread_id="draft")
     levels = ["internal", "internal", "confidential", "internal", "internal"]
     for index, level in enumerate(levels):
         manager.record_turn(address, str(index), f"input-{index}", f"draft-{index}", security_level=level)

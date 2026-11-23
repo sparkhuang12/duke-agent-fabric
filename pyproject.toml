@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 [project]
 name = "duke-agent-fabric"
 version = "0.3.0"
-description = "Sovereign, policy-governed multi-agent runtime built on LangGraph"
+description = "Shanhai Scroll, a Chinese novel-writing desk for chapters, characters, clues and AI-assisted continuation"
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "Apache-2.0" }
@@ -14,18 +14,14 @@ dependencies = [
   "anyio>=4.8,<4.11",
   "fastapi>=0.116,<1",
   "httpx>=0.27,<1",
-  "langchain>=1.0,<2",
   "langchain-core>=1.0,<2",
   "langchain-openai>=1.0,<2",
   "langgraph>=1.0,<2",
-  "langgraph-checkpoint-sqlite>=3.0,<4",
-  "mcp>=1.27,<2",
   "prometheus-client>=0.21,<1",
   "PyJWT[crypto]>=2.10,<3",
   "pydantic>=2.10,<3",
   "pydantic-settings>=2.7,<3",
   "structlog>=24.4,<26",
-  "tenacity>=8.2,<10",
   "uvicorn[standard]>=0.34,<1",
 ]
 
@@ -52,11 +48,14 @@ dev = [
 [project.scripts]
 duke-agent-fabric = "duke_harness.cli:main"
 duke-harness = "duke_harness.cli:main"
-duke-office-mcp = "duke_harness.mcp.office_server:main"
 duke-maintenance = "duke_harness.maintenance:main"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/duke_harness", "backend"]
+packages = ["src/duke_harness"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"config/agents.json" = "duke_harness/resources/config/agents.json"
+"prototype" = "duke_harness/resources/prototype"
 
 [tool.pytest.ini_options]
 addopts = "-q"

@@ -10,6 +10,8 @@ from pydantic import Field, SecretStr, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
+PACKAGED_RESOURCES = Path(__file__).resolve().parent / "resources"
+RESOURCE_ROOT = PACKAGED_RESOURCES if PACKAGED_RESOURCES.is_dir() else PROJECT_ROOT
 
 
 class Settings(BaseSettings):
@@ -27,7 +29,7 @@ class Settings(BaseSettings):
     host: str = "127.0.0.1"
     port: int = Field(default=9090, ge=1, le=65535)
     log_level: str = "INFO"
-    data_dir: Path = PROJECT_ROOT / "data"
+    data_dir: Path = (Path.cwd() if PACKAGED_RESOURCES.is_dir() else PROJECT_ROOT) / "data"
     database_url: str = "sqlite:///data/harness.db"
     redis_url: SecretStr = SecretStr("")
 
@@ -55,17 +57,14 @@ class Settings(BaseSettings):
     long_term_retention_days: int = Field(default=365, ge=30, le=3650)
 
     max_graph_steps: int = Field(default=12, ge=2, le=100)
-    max_tool_calls: int = Field(default=6, ge=0, le=50)
     max_run_seconds: int = Field(default=180, ge=5, le=3600)
     execution_workers: int = Field(default=8, ge=1, le=128)
     max_pending_runs: int = Field(default=32, ge=1, le=10000)
     circuit_breaker_threshold: int = Field(default=5, ge=1, le=100)
     circuit_breaker_cooldown_seconds: int = Field(default=30, ge=1, le=3600)
 
-    agent_config_path: Path = PROJECT_ROOT / "config" / "agents.json"
-    skills_manifest_path: Path = PROJECT_ROOT / "skills" / "manifest.json"
-    static_dir: Path = PROJECT_ROOT / "prototype"
-    expose_legacy_api: bool = True
+    agent_config_path: Path = RESOURCE_ROOT / "config" / "agents.json"
+    static_dir: Path = RESOURCE_ROOT / "prototype"
 
     auth_mode: Literal["development_headers", "trusted_proxy", "oidc"] = "development_headers"
     trusted_proxy_secret: SecretStr = SecretStr("")

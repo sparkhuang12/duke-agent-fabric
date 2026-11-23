@@ -14,4 +14,3 @@ POLICY_DECISIONS = Counter(
     "OPA and fallback decisions",
     ["source", "allow"],
 )
-TOOL_CALLS = Counter("duke_harness_tool_calls_total", "Tool calls", ["agent_id"])

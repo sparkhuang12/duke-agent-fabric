@@ -22,6 +22,5 @@ data:
   DUKE_SHORT_TERM_RETENTION_DAYS: "7"
   DUKE_LONG_TERM_RETENTION_DAYS: "365"
   DUKE_STORAGE_ALLOWED_HOSTS: mysql.duke-system.svc,redis.duke-system.svc
-  DUKE_EXPOSE_LEGACY_API: "false"
   LANGCHAIN_TRACING_V2: "false"
   LANGSMITH_TRACING: "false"

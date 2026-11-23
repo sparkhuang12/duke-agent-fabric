@@ -1,11 +1,10 @@
 from __future__ import annotations
 
-import json
 import time
 from itertools import chain
 from typing import Any, Literal
 
-from langchain_core.messages import AIMessage, BaseMessage, HumanMessage, SystemMessage, ToolMessage
+from langchain_core.messages import AIMessage, BaseMessage, HumanMessage, SystemMessage
 from langgraph.graph import END, START, StateGraph
 from langgraph.types import interrupt
 
@@ -14,9 +13,7 @@ from duke_harness.domain import AgentSpec, ContextAddress, Principal
 from duke_harness.harness.state import HarnessState
 from duke_harness.models.router import ModelRouter
 from duke_harness.policy.client import PolicyClient
-from duke_harness.resilience.errors import RunDeadlineExceededError
-from duke_harness.skills.loader import SkillRegistry
-from duke_harness.tools.office import ToolExecutionContext, ToolRegistry
+from duke_harness.resilience.errors import ModelProtocolError, RunDeadlineExceededError
 
 
 def _message_text(content: Any) -> str:
@@ -70,23 +67,16 @@ class HarnessGraphBuilder:
         contexts: ContextManager,
         policies: PolicyClient,
         models: ModelRouter,
-        tools: ToolRegistry,
-        skills: SkillRegistry,
-        max_tool_calls: int,
     ):
         self.contexts = contexts
         self.policies = policies
         self.models = models
-        self.tools = tools
-        self.skills = skills
-        self.max_tool_calls = max_tool_calls
 
     def build(self, checkpointer: Any) -> Any:
         graph = StateGraph(HarnessState)
         graph.add_node("authorize_input", self.authorize_input)
         graph.add_node("hydrate_context", self.hydrate_context)
         graph.add_node("invoke_model", self.invoke_model)
-        graph.add_node("execute_tools", self.execute_tools)
         graph.add_node("authorize_output", self.authorize_output)
         graph.add_node("approval_gate", self.approval_gate)
         graph.add_node("persist", self.persist)
@@ -97,12 +87,7 @@ class HarnessGraphBuilder:
             "authorize_input", self.after_authorize_input, {"continue": "hydrate_context", "deny": "deny"}
         )
         graph.add_edge("hydrate_context", "invoke_model")
-        graph.add_conditional_edges(
-            "invoke_model",
-            self.after_model,
-            {"tools": "execute_tools", "output": "authorize_output", "limit": "deny"},
-        )
-        graph.add_edge("execute_tools", "invoke_model")
+        graph.add_edge("invoke_model", "authorize_output")
         graph.add_conditional_edges(
             "authorize_output",
             self.after_authorize_output,
@@ -160,7 +145,6 @@ class HarnessGraphBuilder:
             history_level = _max_result_security_level(item_metadata, history_level)
         if snapshot.summary and SECURITY_RANKS.get(history_level, 1) < SECURITY_RANKS["internal"]:
             history_level = "internal"
-        skill_prompt = self.skills.prompt_for(agent.skills)
         context_sections = [
             f"Agent identity: {agent.id}",
             (
@@ -172,8 +156,6 @@ class HarnessGraphBuilder:
             context_sections.append(f"交付物：{agent.deliverable}")
         if agent.boundary:
             context_sections.append(f"核验边界：{agent.boundary}")
-        if skill_prompt:
-            context_sections.append("Audited skills:\n" + skill_prompt)
         system = SystemMessage(content=agent.system_prompt + "\n\n" + "\n\n".join(context_sections))
         history: list[BaseMessage] = []
         references = []
@@ -197,90 +179,14 @@ class HarnessGraphBuilder:
                 "truncated": snapshot.truncated,
                 "memory_count": len(snapshot.memories),
             },
-            "tool_call_count": 0,
         }
 
     def invoke_model(self, state: HarnessState) -> dict[str, Any]:
         self._check_deadline(state)
-        _, _, agent = self._models(state)
-        response = self.models.invoke(state["messages"], self.tools.langchain_tools(agent.allowed_tools))
+        response = self.models.invoke(state["messages"])
+        if isinstance(response, AIMessage) and (response.tool_calls or response.invalid_tool_calls):
+            raise ModelProtocolError("the fiction editor expects a text response")
         return {"messages": [response]}
-
-    def after_model(self, state: HarnessState) -> Literal["tools", "output", "limit"]:
-        message = state["messages"][-1]
-        tool_calls = message.tool_calls if isinstance(message, AIMessage) else []
-        if not tool_calls:
-            return "output"
-        if state.get("tool_call_count", 0) + len(tool_calls) > self.max_tool_calls:
-            return "limit"
-        return "tools"
-
-    def execute_tools(self, state: HarnessState) -> dict[str, Any]:
-        self._check_deadline(state)
-        principal, address, agent = self._models(state)
-        message = state["messages"][-1]
-        if not isinstance(message, AIMessage):
-            return {}
-        tool_messages: list[ToolMessage] = []
-        decisions = list(state.get("policy_decisions", []))
-        security_level = state.get("security_level", "internal")
-        requires_approval = state.get("requires_approval", False)
-        for call in message.tool_calls:
-            name = str(call["name"])
-            arguments = dict(call.get("args", {}))
-            decision = self.policies.decide(
-                action="tool.call",
-                principal=principal,
-                address=address,
-                agent=agent,
-                resource={"tool_name": name, "security_level": security_level},
-                context={
-                    "run_id": state["run_id"],
-                    "argument_names": sorted(arguments),
-                    "argument_chars": len(json.dumps(arguments, ensure_ascii=False)),
-                },
-            )
-            decisions.append(decision.model_dump(mode="json"))
-            if not decision.allow:
-                result: dict[str, Any] = {"error": "policy_denied", "reasons": decision.reasons}
-            else:
-                try:
-                    result = self.tools.invoke(
-                        name,
-                        arguments,
-                        ToolExecutionContext(principal=principal, run_id=state["run_id"], agent_id=agent.id),
-                    )
-                except Exception as exc:
-                    result = {"error": "tool_failed", "error_type": type(exc).__name__}
-                result_security_level = _max_result_security_level(result, security_level)
-                result_decision = self.policies.decide(
-                    action="tool.result",
-                    principal=principal,
-                    address=address,
-                    agent=agent,
-                    resource={"tool_name": name, "security_level": result_security_level},
-                    context={"run_id": state["run_id"]},
-                )
-                decisions.append(result_decision.model_dump(mode="json"))
-                if not result_decision.allow:
-                    result = {"error": "policy_denied", "reasons": result_decision.reasons}
-                else:
-                    security_level = result_security_level
-                    requires_approval = requires_approval or bool(result_decision.obligations.get("manual_approval"))
-            tool_messages.append(
-                ToolMessage(
-                    content=json.dumps(result, ensure_ascii=False),
-                    tool_call_id=str(call["id"]),
-                    name=name,
-                )
-            )
-        return {
-            "messages": tool_messages,
-            "tool_call_count": state.get("tool_call_count", 0) + len(tool_messages),
-            "policy_decisions": decisions,
-            "security_level": security_level,
-            "requires_approval": requires_approval,
-        }
 
     @staticmethod
     def _check_deadline(state: HarnessState) -> None:
@@ -302,7 +208,7 @@ class HarnessGraphBuilder:
                 "security_level": security_level,
                 "memory_scope": state.get("memory_scope", "short_term"),
             },
-            context={"run_id": state["run_id"], "tool_call_count": state.get("tool_call_count", 0)},
+            context={"run_id": state["run_id"]},
         )
         decisions = [*state.get("policy_decisions", []), decision.model_dump(mode="json")]
         if not decision.allow:

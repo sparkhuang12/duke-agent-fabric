@@ -17,6 +17,6 @@ LiteLLM is allowed only when every upstream is inside the same approved residenc
 - fallback models in another legal/data-processing boundary;
 - external LangSmith tracing or prompt logging.
 
-The application allow-list is defense in depth, not a firewall. Kubernetes NetworkPolicy or host/cloud firewall rules must make all other egress impossible. Validate the primary and fallback model for tool-call compatibility, maximum context, timeout behavior, Chinese quality, prompt-injection resistance and peak capacity before adding its hostname.
+The application allow-list is defense in depth, not a firewall. Kubernetes NetworkPolicy or host/cloud firewall rules must make all other egress impossible. Validate the primary and fallback model for narrative continuity, maximum context, timeout behavior, Chinese quality, prompt-injection resistance and peak capacity before adding its hostname.
 
 References: [vLLM OpenAI-compatible server](https://docs.vllm.ai/en/latest/serving/openai_compatible_server/), [LiteLLM production deployment](https://docs.litellm.ai/docs/proxy/deploy), [LiteLLM fallback routing](https://docs.litellm.ai/docs/proxy/reliability).

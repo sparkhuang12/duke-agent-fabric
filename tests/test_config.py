@@ -29,7 +29,6 @@ def test_production_accepts_explicit_fail_closed_controls() -> None:
         opa_url="http://opa:8181",
         opa_allowed_hosts="opa",
         opa_embedded_development_fallback=False,
-        expose_legacy_api=False,
     )
     assert settings.is_production is True
     assert settings.short_term_ttl_seconds == 604800

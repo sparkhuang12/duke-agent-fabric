@@ -1,39 +1,7 @@
-# Durable project memory
+# 山海手卷项目记忆
 
-## Current direction
-
-- The public project/distribution name is Duke Agent Fabric (`duke-agent-fabric`); the internal `duke_harness` Python namespace and legacy CLI alias remain for compatibility.
-- The project is a policy-governed multi-agent harness, not only an office UI.
-- Python, FastAPI, LangChain and LangGraph are the primary runtime stack.
-- OPA is the enforceable policy engine and must fail closed in production.
-- The model boundary is OpenAI-compatible and provider-neutral.
-- Production short-term conversations and LangGraph checkpoints use Redis 8 with a fixed seven-day TTL.
-- Production long-term memory, run skeletons and content-minimized audit events use MySQL 8.4; short-term run payloads are scrubbed after seven days and approved long-term content is deleted after 365 days. SQLite is local/test only.
-- Context isolation key is `tenant_id + user_id + agent_id + thread_id`.
-- LangGraph checkpoints, conversation messages and long-term memories are distinct stores/lifecycles.
-- Agent-to-agent memory sharing is denied by construction. Shared knowledge must be an explicit OPA-authorized resource.
-- MCP tools reuse policy-aware pure functions; local stdio identity is process-bound and cannot be elevated through tool arguments.
-- Vendored skills are text-only, commit-pinned, checksum-verified and license-reviewed.
-- All manual approvals enforce four-eyes separation; confidential and secret runs require a different same-tenant `security_approver`.
-- Concurrent approval resume is serialized across replicas with an expiring Redis per-run lease.
-- Production identity uses self-hosted Keycloak-compatible OIDC with locally validated JWTs and mapped tenant/department/role/clearance claims.
-- Model traffic is restricted to explicitly allow-listed self-hosted OpenAI-compatible gateways; public SaaS and external tracing are forbidden by default.
-- Type-check all optional storage drivers in CI, using the same Python target as the interpreter that installed their dependencies.
-- The supported deployment profiles are protected single host, private-cloud VM and Kubernetes.
-
-## Writing workbench
-
-- `prototype/index.html` opens the 山海手卷 novel desk. `prototype/office.html` is the six-role v1 office writing desk. `prototype/operations.html` hosts the development dashboard. The homepage forwards legacy hash links; the optional legacy router is not a dependency of the writing desk.
-- `config/agents.json` owns role descriptions, deliverables and review boundaries used by the desk and model. Each manuscript/role has its own thread. A structured document brief is submitted anew each round and classified together with the instruction.
-- Approved turns form the revision history. The prompt budget prioritizes the latest draft and instruction before older excerpts. Historical excerpts and retrieved memories are model input data. Reviewers use the existing four-eyes approval endpoints.
-- The office desk keeps only manuscript references and development identity in tab-scoped storage. It rehydrates submitted briefs and versions through authorized run reads. Unsubmitted form edits live in page memory.
-
-The novel library uses IndexedDB scoped by the authenticated tenant/user in the browser. Its development identity is persistent per browser profile. Concurrent book revisions create a separate copy. Text export is available on the shelf. The fiction agent receives an explicit bounded snapshot of earlier chapters, active text and chronologically relevant character/clue notes. Each generation uses its own isolated thread so discarded suggestions never become canon. The author explicitly accepts completed continuations. The office catalog remains six roles. The landscape, font subset and mark are served locally. See `DESIGN.md`.
-
-## Production assumptions still requiring owner decisions
-
-- Expected concurrency, latency SLO and durable workload queue requirements.
-- Tenant deletion/export, backup location and legal-hold exceptions.
-- Actual on-premises model inventory and fallback order.
-- Evaluation datasets and release-blocking quality thresholds for each agent.
-- Organizational approver assignment, notifications and escalation timers.
+- 产品专注中文长篇小说。唯一内置智能体为 `fiction`。界面是 `prototype/index.html`，项目及 CLI 名称保留 `duke-agent-fabric`。
+- 维持原站点、开发身份键、IndexedDB 名称、存储结构和租户/用户作用域，保证升级可继续打开原稿。并发编辑冲突另存为副本。导出为纯文本。
+- `novel-library.mjs` 按当前章构造有限长度的作品快照。每次新建议单独创建线程，重试复用原始快照。续文须由作者手动采纳。
+- FastAPI 提供身份、运行和结果读取。部署保留 OIDC、OPA、Redis 检查点、MySQL 和模型网关。开发可用 SQLite。原稿与服务端运行历史分别存储。
+- 产品说明与 GitHub About 使用「山海手卷」及实际写作能力。旧办公角色、页面与 MCP 工具已退役。升级时不删除用户数据。

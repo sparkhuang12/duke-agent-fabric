@@ -7,7 +7,7 @@ from datetime import datetime, timezone
 from enum import Enum
 from typing import Any, Literal
 
-from pydantic import BaseModel, Field, field_validator, model_validator
+from pydantic import BaseModel, Field, field_validator
 
 IDENTIFIER_PATTERN = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$")
 
@@ -74,7 +74,6 @@ class ContextAddress(BaseModel):
 
 
 class AgentSpec(BaseModel):
-    workspace: Literal["office", "fiction"] = "office"
     id: str
     name: str
     description: str
@@ -82,9 +81,7 @@ class AgentSpec(BaseModel):
     role_title: str = ""
     deliverable: str = ""
     boundary: str = ""
-    allowed_tools: list[str] = Field(default_factory=list)
     allowed_roles: list[str] = Field(default_factory=lambda: ["user", "platform_admin"])
-    skills: list[str] = Field(default_factory=list)
     require_approval: bool = True
     max_steps: int = Field(default=8, ge=2, le=50)
 
@@ -105,25 +102,10 @@ class RunStatus(str, Enum):
     failed = "failed"
 
 
-class WritingBrief(BaseModel):
-    document_type: str = Field(min_length=1, max_length=32)
-    audience: str = Field(default="", max_length=200)
-    materials: str = Field(default="", max_length=12000)
-
-    def as_text(self) -> str:
-        rows = [f"文种：{self.document_type}"]
-        if self.audience:
-            rows.append(f"主送对象：{self.audience}")
-        if self.materials:
-            rows.append(f"事实与依据：\n{self.materials}")
-        return "\n".join(rows)
-
-
 class RunRequest(BaseModel):
     agent_id: str
     thread_id: str = Field(default_factory=lambda: new_id("thread"))
     input: str = Field(min_length=1, max_length=100_000)
-    writing_brief: WritingBrief | None = None
     metadata: dict[str, Any] = Field(default_factory=dict)
     idempotency_key: str | None = Field(default=None, max_length=128)
     security_level: SecurityLevel = SecurityLevel.internal
@@ -135,21 +117,6 @@ class RunRequest(BaseModel):
         if not IDENTIFIER_PATTERN.fullmatch(value):
             raise ValueError("invalid identifier")
         return value
-
-    @property
-    def model_input(self) -> str:
-        if self.writing_brief is None:
-            return self.input
-        return f"{self.writing_brief.as_text()}\n\n本轮要求：\n{self.input}"
-
-    @model_validator(mode="after")
-    def validate_writing_brief(self) -> RunRequest:
-        if self.writing_brief is not None:
-            if self.agent_id != "document":
-                raise ValueError("writing_brief is supported by the document agent")
-            if len(self.model_input) > 100_000:
-                raise ValueError("combined input and writing brief exceed 100000 characters")
-        return self
 
 
 class ErrorDetail(BaseModel):

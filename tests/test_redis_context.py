@@ -9,8 +9,8 @@ from duke_harness.domain import ContextAddress
 def test_redis_short_term_context_is_namespaced_and_expires() -> None:
     client = fakeredis.FakeRedis(decode_responses=True)
     repository = RedisShortTermRepository("redis://unused", ttl_seconds=604800, client=client)
-    first = ContextAddress(tenant_id="tenant-a", user_id="alice", agent_id="search", thread_id="same")
-    second = ContextAddress(tenant_id="tenant-a", user_id="alice", agent_id="policy", thread_id="same")
+    first = ContextAddress(tenant_id="tenant-a", user_id="alice", agent_id="fiction", thread_id="same")
+    second = ContextAddress(tenant_id="tenant-a", user_id="another-author", agent_id="fiction", thread_id="same")
 
     repository.append_message(first, role="user", content="private", run_id="run-1")
     repository.set_summary(first, "summary")

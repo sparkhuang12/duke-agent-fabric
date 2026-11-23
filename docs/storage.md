@@ -1,5 +1,8 @@
 # Context storage and retention
 
+The author’s manuscript, cast and clues are stored in the browser’s identity-scoped IndexedDB. Export the book before clearing site data. The server stores AI request content and results under the retention rules below.
+
+
 ## Short-term: Redis 8
 
 Redis stores conversation turns, rolling summaries and LangGraph checkpoints. Each message older than seven days is removed even when its thread remains active; inactive thread keys expire natively. Checkpoint TTL is seven days with refresh-on-read disabled, so a pending approval cannot be extended merely by polling it.
@@ -16,4 +19,4 @@ The idempotent bootstrap is [deploy/mysql/001-schema.sql](../deploy/mysql/001-sc
 
 ## Isolation
 
-Both tiers use the SHA-256 namespace derived from `tenant_id + user_id + agent_id + thread_id`. Short-term retrieval additionally filters each item against the caller's current clearance, so a later clearance downgrade cannot read previously authorized confidential context. Cross-agent sharing must use an explicit OPA-authorized knowledge resource.
+Both tiers use the SHA-256 namespace derived from `tenant_id + user_id + agent_id + thread_id`. Short-term retrieval additionally filters each item against the caller's current clearance, so a later clearance downgrade cannot read previously authorized confidential context.

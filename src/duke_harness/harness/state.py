@@ -18,7 +18,6 @@ class HarnessState(TypedDict, total=False):
     status: str
     denial_reason: str
     policy_decisions: list[dict[str, Any]]
-    tool_call_count: int
     approval: dict[str, Any]
     context_metadata: dict[str, Any]
     security_level: str
