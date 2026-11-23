@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+import os
 import subprocess
+import tempfile
 import sys
 import time
 import urllib.request
@@ -39,10 +41,11 @@ def find_free_port() -> int:
         return int(sock.getsockname()[1])
 
 
-def start_server(port: int) -> subprocess.Popen[str]:
+def start_server(port: int, data_dir: str) -> subprocess.Popen[str]:
     return subprocess.Popen(
-        [sys.executable, "-m", "backend.server", "--host", "127.0.0.1", "--port", str(port)],
+        [sys.executable, "-m", "duke_harness.cli", "--host", "127.0.0.1", "--port", str(port)],
         cwd=ROOT,
+        env={**os.environ, "DUKE_DATA_DIR": data_dir, "DUKE_DATABASE_URL": f"sqlite:///{data_dir}/test.db"},
         text=True,
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
@@ -57,7 +60,7 @@ def wait_for_server(base_url: str, process: subprocess.Popen[str]) -> None:
             output = process.stdout.read() if process.stdout else ""
             raise RuntimeError(f"server exited early:\n{output}")
         try:
-            with urllib.request.urlopen(f"{base_url}/api/health", timeout=1) as response:
+            with urllib.request.urlopen(f"{base_url}/api/v1/health/live", timeout=1) as response:
                 if response.status == 200:
                     return
         except Exception as exc:  # noqa: BLE001 - keep startup diagnostics simple.
@@ -71,29 +74,6 @@ def assert_dom_contains(base_url: str) -> None:
     for term in ("第十三封来信", "章回目录", "没有寄件人的信", "出场人物", "未解伏笔", "续写本章"):
         if term not in dom:
             raise AssertionError(f"Novel desk missing term: {term}")
-    dom = run_chrome(["--dump-dom", base_url + "/office.html"]).stdout
-    missing = [term for term in ("写作工作室", "角色手册", "稿件记录", "政策研判", "模型待配置") if term not in dom]
-    if missing:
-        raise AssertionError(f"Writing desk missing terms: {missing}")
-    dom = run_chrome(["--dump-dom", base_url + "/operations.html"]).stdout
-    required_terms = [
-        "平台总览",
-        "公文生成智能体",
-        "政策问答智能体",
-        "文件检索智能体",
-        "会议纪要智能体",
-        "文件分析比对智能体",
-        "智能审校智能体",
-        "知识分类与检索",
-        "任务流转",
-        "审计日志",
-        "文件入库",
-        "系统配置",
-        "合计 800 万元",
-    ]
-    missing = [term for term in required_terms if term not in dom]
-    if missing:
-        raise AssertionError(f"DOM missing terms: {', '.join(missing)}")
 
 
 def inspect_screenshot(path: Path, min_width: int, min_height: int) -> None:
@@ -121,22 +101,6 @@ def inspect_screenshot(path: Path, min_width: int, min_height: int) -> None:
             raise AssertionError("screenshot appears mostly blank")
 
 
-def assert_api(base_url: str) -> None:
-    for path in [
-        "/api/dashboard",
-        "/api/agents",
-        "/api/knowledge",
-        "/api/documents",
-        "/api/roadmap",
-        "/api/tasks",
-        "/api/audit-logs",
-        "/api/config/public",
-    ]:
-        with urllib.request.urlopen(f"{base_url}{path}", timeout=3) as response:
-            if response.status != 200:
-                raise AssertionError(f"API failed: {path} -> {response.status}")
-
-
 def assert_screenshots_are_visual(base_url: str) -> None:
     ARTIFACT_DIR.mkdir(parents=True, exist_ok=True)
     run_chrome(["--window-size=1440,1100", f"--screenshot={SCREENSHOT}", base_url])
@@ -149,10 +113,14 @@ def assert_screenshots_are_visual(base_url: str) -> None:
 def main() -> None:
     port = find_free_port()
     base_url = f"http://127.0.0.1:{port}"
-    process = start_server(port)
+    with tempfile.TemporaryDirectory() as data_dir:
+        check_desk(base_url, port, data_dir)
+
+
+def check_desk(base_url: str, port: int, data_dir: str) -> None:
+    process = start_server(port, data_dir)
     try:
         wait_for_server(base_url, process)
-        assert_api(base_url)
         assert_dom_contains(base_url)
         assert_screenshots_are_visual(base_url)
         print(f"API and visual check passed: {base_url}")

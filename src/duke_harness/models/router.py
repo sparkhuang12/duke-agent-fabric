@@ -7,7 +7,6 @@ from typing import Any
 import httpx
 from langchain_core.language_models.chat_models import BaseChatModel
 from langchain_core.messages import BaseMessage
-from langchain_core.tools import BaseTool
 from langchain_openai import ChatOpenAI
 
 from duke_harness.config import Settings
@@ -55,12 +54,11 @@ class ModelRouter:
     def ready(self) -> bool:
         return bool(self._models)
 
-    def invoke(self, messages: Sequence[BaseMessage], tools: Sequence[BaseTool]) -> BaseMessage:
+    def invoke(self, messages: Sequence[BaseMessage]) -> BaseMessage:
         if not self._models:
             raise ModelNotConfiguredError("model API is not configured")
         failures: list[str] = []
-        for name, configured_model in self._models.items():
-            model = configured_model.bind_tools(list(tools)) if tools else configured_model
+        for name, model in self._models.items():
             for attempt in range(self.settings.model_max_retries + 1):
                 try:
                     self.breaker.before_call(name)

@@ -49,7 +49,6 @@ class PolicyClient:
             "address": address.model_dump(),
             "agent": {
                 "id": agent.id,
-                "allowed_tools": agent.allowed_tools,
                 "allowed_roles": agent.allowed_roles,
                 "require_approval": agent.require_approval,
             },
@@ -107,9 +106,9 @@ class PolicyClient:
         allow = subject["tenant_id"] == address["tenant_id"] and subject["user_id"] == address["user_id"]
         if not allow:
             reasons.append("principal does not own the context namespace")
-        if action == "tool.call" and resource.get("tool_name") not in agent.get("allowed_tools", []):
+        if action not in {"agent.invoke", "agent.output", "context.read", "run.read", "run.approve"}:
             allow = False
-            reasons.append("tool is not allow-listed for this agent")
+            reasons.append("unknown writing operation")
         if action != "run.approve" and not set(subject.get("roles", [])).intersection(agent.get("allowed_roles", [])):
             allow = False
             reasons.append("principal has no role allowed by this agent")

@@ -8,8 +8,8 @@ from duke_harness.policy.client import PolicyClient
 
 def _models():
     principal = Principal(tenant_id="tenant", user_id="user", roles=["user"])
-    address = ContextAddress(tenant_id="tenant", user_id="user", agent_id="search", thread_id="thread")
-    agent = AgentSpec(id="search", name="Search", description="", system_prompt="", allowed_tools=["safe"])
+    address = ContextAddress(tenant_id="tenant", user_id="user", agent_id="fiction", thread_id="thread")
+    agent = AgentSpec(id="fiction", name="小说协作编辑", description="", system_prompt="")
     return principal, address, agent
 
 
@@ -32,7 +32,7 @@ def test_opa_decision_is_parsed() -> None:
     assert decision.source == "opa"
 
 
-def test_fail_closed_and_embedded_tool_allowlist() -> None:
+def test_fail_closed_and_embedded_unknown_action_denial() -> None:
     def unavailable(_: httpx.Request) -> httpx.Response:
         raise httpx.ConnectError("offline")
 

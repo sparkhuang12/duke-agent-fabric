@@ -262,6 +262,7 @@ class PostgresContextRepository(ContextRepository):
                 """SELECT record_json FROM harness_runs
                    WHERE status = 'waiting_approval'
                      AND record_json->'address'->>'tenant_id' = %s
+                     AND record_json->'address'->>'agent_id' = 'fiction'
                    ORDER BY updated_at ASC LIMIT %s""",
                 (tenant_id, limit),
             )

@@ -8,7 +8,7 @@ Until the first stable release, only the latest release on the default branch re
 
 Use GitHub Private Vulnerability Reporting for the repository. If it is not enabled yet, contact the repository owner privately and ask for a secure reporting channel; do not open a public issue.
 
-Include the affected version, deployment mode, impact, minimum reproduction and suggested mitigation. Remove real credentials, personal data, prompts and documents. Reports involving cross-tenant access, OIDC bypass, OPA bypass, arbitrary tool execution, checkpoint deserialization, Skill/MCP supply-chain compromise or data egress are treated as high priority.
+Include the affected version, deployment mode, impact, minimum reproduction and suggested mitigation. Remove real credentials, personal data, prompts and documents. Reports involving cross-tenant access, OIDC bypass, OPA bypass, checkpoint deserialization, unauthorized manuscript access or data egress are treated as high priority.
 
 The maintainer should acknowledge a complete report within seven days, coordinate a fix and advisory, and avoid disclosing reporter details without permission. This is a best-effort open-source policy, not a commercial support SLA.
 

@@ -291,6 +291,7 @@ class MySQLLongTermRepository:
                     """SELECT record_json FROM harness_runs
                        WHERE status = 'waiting_approval'
                          AND JSON_UNQUOTE(JSON_EXTRACT(record_json, '$.address.tenant_id')) = :tenant_id
+                         AND JSON_UNQUOTE(JSON_EXTRACT(record_json, '$.address.agent_id')) = 'fiction'
                        ORDER BY updated_at ASC LIMIT :limit"""
                 ),
                 {"tenant_id": tenant_id, "limit": limit},

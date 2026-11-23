@@ -30,10 +30,9 @@ class RunDeadlineExceededError(HarnessError):
     stage = "runtime"
 
 
-class ToolExecutionError(HarnessError):
-    code = "tool_execution_error"
-    retryable = False
-    stage = "tool"
+class UnknownAgentError(HarnessError):
+    code = "unknown_agent"
+    stage = "api"
 
 
 class RunNotFoundError(HarnessError):

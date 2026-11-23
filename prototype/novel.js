@@ -2,7 +2,6 @@ import {chapter, chapterLabel, listBooks, newBook, notesAt, openLibrary, sampleB
 
 const $ = id => document.getElementById(id);
 const panel = $("panel");
-const legacy = ["dashboard", "agents", "knowledge", "tasks", "audit", "roadmap", "settings"];
 const state = {book: null, chapterId: "", db: null, scope: "", session: null, auth: "", token: "", dev: "", dirty: false, saving: null, version: 0, panelEpoch: 0};
 
 function message(text = "") {
@@ -425,7 +424,7 @@ function modelPanel(mode, reset = false, fetchNow = false) {
             actions.append(apply, restart); body.append(actions);
           } else body.append(restart);
         } else if (["queued", "running", "waiting_approval"].includes(run.status)) {
-          status.textContent = run.status === "waiting_approval" ? "本次内容需要独立复核。请由授权复核人在办公写作台处理，之后在此刷新。" : "正在处理，可稍后刷新结果。";
+          status.textContent = run.status === "waiting_approval" ? "本次内容需要独立复核。请联系有权限的复核人处理此请求，之后可在这里刷新。" : "正在处理，可稍后刷新结果。";
           body.append(action("刷新结果", load));
         } else {
           status.textContent = run.status === "denied" ? "本次请求未获准，结果未写入正文。" : "未能取得模型结果，请检查模型连接后重试。";
@@ -462,9 +461,6 @@ function modelPanel(mode, reset = false, fetchNow = false) {
 }
 
 function start() {
-  const query = new URLSearchParams(location.search);
-  if (legacy.includes(location.hash.slice(1))) { location.replace("./operations.html" + location.hash); return; }
-  if (query.has("agent")) { location.replace("./office.html" + location.search + location.hash); return; }
   const demo = sampleBook();
   setActive(demo, demo.chapters[2].id);
   $("chapterBody").oninput = () => {

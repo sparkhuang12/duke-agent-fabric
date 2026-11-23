@@ -1,28 +1,5 @@
-# Contributing to Duke Agent Fabric
+# 参与山海手卷
 
-Thank you for improving Duke. Changes to an agent harness can affect tenant isolation, tool authority and retained data, so security evidence is part of the implementation—not a follow-up task.
+运行环境和启动方法见 [README](README.md)。改动正文编辑、书架或续写时，请在示例小说与一部自建作品上验证。重点核对当前章能看到哪些人物和伏笔、刷新后是否保留稿件，以及未采纳的续文是否会进入下一次请求。
 
-## Development setup
-
-```bash
-python3 -m venv .venv
-.venv/bin/python -m pip install -e '.[dev,production]'
-make verify
-```
-
-Use Python 3.10 or newer. Keep new runtime dependencies narrowly scoped and include their license and supply-chain rationale in the pull request.
-
-## Pull requests
-
-- Open a focused issue or pull request with the problem, threat boundary and expected behavior.
-- Add tests for tenant/user/agent/thread isolation, retries, denial paths and retention behavior when relevant.
-- Never weaken production fail-closed checks to make local development easier.
-- Do not add model calls, telemetry, remote MCP servers or network-capable Skills without an explicit data-flow review.
-- Keep external Skills commit-pinned, checksum-verified, text-only and license-reviewed.
-- Update README/docs and `memory/architecture.md` when public behavior or a durable design decision changes.
-
-Run `ruff`, `mypy`, `pytest`, OPA formatting/tests and Compose validation before submitting. Commits should be understandable and may be squashed by the maintainer.
-
-## Security changes
-
-Security fixes should follow [SECURITY.md](SECURITY.md). Do not demonstrate a live exploit against systems you do not own or place secrets, personal data, model prompts or private documents in an issue.
+提交前运行 `make lint` 和 `make test`。更改鉴权或生产部署时也请运行 OPA 策略测试。涉及项目行为、存储结构或接口的改动，请同步更新文档。安全问题按 [SECURITY.md](SECURITY.md) 提交。

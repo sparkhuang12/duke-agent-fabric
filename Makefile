@@ -12,6 +12,7 @@ dev:
 
 test:
 	.venv/bin/pytest
+	node --test tests/novel-context.test.mjs
 
 lint:
 	.venv/bin/ruff check src tests

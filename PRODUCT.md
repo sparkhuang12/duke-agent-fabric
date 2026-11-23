@@ -1,23 +1,7 @@
-# Duke Agent Fabric
+# 山海手卷
 
-<!-- impeccable:product-schema 1 -->
+山海手卷面向用中文写长篇小说的作者。作者可以在同一页编辑正文、回看章回、核对人物动机和线索进展。桌面使用三栏，手机优先展示正文。
 
-## Platform
+每次续写从当前章节最后的动作接起，使用这时已发生的事和可知的信息。未来章节、其他作品和作者未采用的续文都不进入下一次提议。作者可以先核对前文，也可以提出明确的续写要求。
 
-web
-
-## Users
-
-Chinese-speaking authors write novels, maintain character motivations and track clues across chapters. Staff also prepare documents from organizational materials. A different authorized reviewer checks pending drafts and records feedback. Operators manage documents, tasks and audit records.
-
-## Product Purpose
-
-Help an author resume a novel with the previous chapters, cast and the clues known at the current point in the story. The office desk supports a manuscript from source materials through drafting, independent review and subsequent revisions. The author can return to submitted versions within the manuscript and see the decisions that shaped them.
-
-## Capabilities and Constraints
-
-Six roles cover drafting, policy questions, document search, minutes, comparison and proofreading. Review permissions, scoped context and model availability come from the backend. The development operations dashboard depends on the optional legacy routes. Interface assets must load locally to support private deployments.
-
-## Brand Commitments
-
-Duke is the product name. The user selected concept 01, 山海手卷, with its mineral-green silk landscape, white stag, red seal, chapter index and quiet Chinese manuscript typography. Long-form Chinese text, administrative facts, status and review feedback must remain easy to read.
+书架以浏览器为单位保存。导出包括正文、提要、人物和伏笔。编辑、整理设定与导出均可在未配置模型时使用。产品的设计规格见 [DESIGN.md](DESIGN.md)。

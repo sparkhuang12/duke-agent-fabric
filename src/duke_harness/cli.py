@@ -9,7 +9,7 @@ from duke_harness.config import get_settings
 
 def parse_args() -> argparse.Namespace:
     settings = get_settings()
-    parser = argparse.ArgumentParser(description="Run the Duke Agent Fabric API.")
+    parser = argparse.ArgumentParser(description="启动山海手卷小说写作台。")
     parser.add_argument("--host", default=settings.host)
     parser.add_argument("--port", default=settings.port, type=int)
     parser.add_argument("--reload", action="store_true")

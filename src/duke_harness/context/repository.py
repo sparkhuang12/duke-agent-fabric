@@ -368,11 +368,12 @@ class SQLiteContextRepository(ContextRepository):
         with self._connect() as connection:
             rows = connection.execute(
                 """SELECT record_json FROM harness_runs WHERE status = ?
+                   AND json_extract(record_json, '$.address.tenant_id') = ?
+                   AND json_extract(record_json, '$.address.agent_id') = 'fiction'
                    ORDER BY updated_at ASC LIMIT ?""",
-                ("waiting_approval", limit * 4),
+                ("waiting_approval", tenant_id, limit),
             ).fetchall()
-        records = [RunRecord.model_validate_json(row["record_json"]) for row in rows]
-        return [record for record in records if record.address.tenant_id == tenant_id][:limit]
+        return [RunRecord.model_validate_json(row["record_json"]) for row in rows]
 
     def expire_pending_runs(self, cutoff: datetime, *, dry_run: bool = True) -> int:
         with self._lock, self._connect() as connection:
